@@ -11,16 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1305.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <VBox prefHeight="919.0" prefWidth="182.0" style="-fx-background-color: #fcba03; -fx-border-color: black;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="919.0" prefWidth="182.0" style="-fx-background-color: #fcba03; -fx-border-color: black; -fx-border-width: 1 2 1 1;" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="223.0" prefWidth="180.0">
                <children>
                   <Pane prefHeight="157.0" prefWidth="180.0">
                      <children>
-                        <BorderPane layoutX="32.0" layoutY="5.0" prefHeight="91.0" prefWidth="117.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: black;">
+                        <BorderPane layoutX="29.0" prefHeight="91.0" prefWidth="117.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: black;">
                            <center>
                               <ImageView fitHeight="60.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                                  <image>
@@ -29,7 +28,7 @@
                               </ImageView>
                            </center>
                         </BorderPane>
-                        <Label fx:id="currentUser_Username" layoutX="76.0" layoutY="109.0" text="Label" />
+                        <Label fx:id="currentUser_Username" layoutX="76.0" layoutY="109.0" text="User" />
                      </children>
                   </Pane>
                </children>
@@ -37,7 +36,23 @@
             <Accordion prefHeight="248.0" prefWidth="223.0">
               <panes>
                 <TitledPane animated="false" text="User" />
-                <TitledPane animated="false" />
+                <TitledPane animated="false" text="Papeleo">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fcba03;">
+                           <children>
+                              <Hyperlink onAction="#hyperLinkRemision" text="Remision" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
+                              <Hyperlink onAction="#HyperLinkDevolucion" text="Devolucion" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
+                           </children>
+                        </VBox>
+                     </content></TitledPane>
                   <TitledPane animated="false" layoutX="10.0" layoutY="35.0" text="Inventario">
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fcba03;">
@@ -81,6 +96,6 @@
       </VBox>
    </left>
    <center>
-      <BorderPane fx:id="changePane" BorderPane.alignment="CENTER" />
+      <BorderPane fx:id="changePane" prefHeight="769.0" prefWidth="1123.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

@@ -24,6 +24,7 @@ import model.RentaEquiposDelValle;
 public class RentaGUI {
 
 	private RentaEquiposDelValle rentaEquipos;
+	private String currentUser;
 
 	public RentaGUI() {
 		rentaEquipos = new RentaEquiposDelValle();
@@ -67,6 +68,7 @@ public class RentaGUI {
 				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("index.fxml"));
 
 				Stage stage1 = (Stage) mainPane.getScene().getWindow();
+				currentUser = txtUsername.getText();
 				stage1.close();
 
 				fxmlloader.setController(this);
@@ -96,6 +98,7 @@ public class RentaGUI {
 			txtUsername.clear();
 			pfPassword.clear();
 		}
+    	currentUser_Username.setText(currentUser);
 	}
 
 	//------------------------------------------Add new user GUI-------------------------------------------
@@ -152,20 +155,46 @@ public class RentaGUI {
 
     @FXML
     private Hyperlink hyperLinkUsers;
+    
 
     @FXML
-    void hyperLinkClients(ActionEvent event) {
+    void HyperLinkDevolucion(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void hyperLinkRemision(ActionEvent event) {
 
     }
 
     @FXML
-    void hyperLinkEmployees(ActionEvent event) {
-
+    void hyperLinkClients(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("users.fxml"));
+		
+		fxmlLoader.setController(this);    	
+		Parent addPane = fxmlLoader.load();
+    	
+    	changePane.setCenter(addPane);
     }
 
     @FXML
-    void hyperLinkUsers(ActionEvent event) {
+    void hyperLinkEmployees(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("users.fxml"));
+		
+		fxmlLoader.setController(this);    	
+		Parent addPane = fxmlLoader.load();
+    	
+    	changePane.setCenter(addPane);
+    }
 
+    @FXML
+    void hyperLinkUsers(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("users.fxml"));
+		
+		fxmlLoader.setController(this);    	
+		Parent addPane = fxmlLoader.load();
+    	
+    	changePane.setCenter(addPane);
     }
     
 
@@ -242,5 +271,40 @@ public class RentaGUI {
     void InvNavType(ActionEvent event) {
 
     }
-	
+    
+    //------------------------------------------------------------USERS-------------------------------------------
+    
+    @FXML
+    private TextField UserNavName;
+
+    @FXML
+    private Label UserInfo;
+
+    @FXML
+    void UserDelete(ActionEvent event) {
+
+    }
+
+    @FXML
+    void UserNavSearch(ActionEvent event) {
+
+    }
+
+    @FXML
+    void UserSaveChanges(ActionEvent event) {
+
+    }
+
+    @FXML
+    void hyperLinkNewUser(ActionEvent event) throws IOException {
+		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("addUserGUI.fxml"));
+
+		fxmlloader.setController(this);
+		Parent menu = fxmlloader.load();
+		Scene scene = new Scene(menu);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.show();
+    }
+
 }

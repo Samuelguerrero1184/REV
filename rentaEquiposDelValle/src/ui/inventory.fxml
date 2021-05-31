@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: grey; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <Pane prefHeight="727.0" prefWidth="220.0" style="-fx-border-width: 0 1 0 0; -fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
@@ -57,7 +56,7 @@
                   <TableColumn fx:id="tvMoreInfo" prefWidth="84.0" resizable="false" />
               </columns>
             </TableView>
-            <Label fx:id="moreInfoLabel" prefHeight="185.0" prefWidth="922.0" />
+            <Label fx:id="moreInfoLabel" prefHeight="185.0" prefWidth="922.0" text="info" textFill="WHITE" />
          </children>
       </VBox>
    </center>
