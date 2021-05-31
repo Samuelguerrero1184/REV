@@ -10,19 +10,19 @@
 
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="850.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <AnchorPane prefHeight="401.0" prefWidth="850.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="427.0" prefWidth="845.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane layoutX="472.0" layoutY="78.0" prefHeight="271.0" prefWidth="296.0">
                <children>
-                  <TextField fx:id="txtUsername" layoutX="74.0" layoutY="43.0" promptText="Usuario" style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #e3e3a8;" />
-                  <PasswordField fx:id="pfPassword" layoutX="74.0" layoutY="111.0" promptText="Contraseña" style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #e3e3a8;" />
+                  <TextField fx:id="txtUsername" layoutX="74.0" layoutY="43.0" promptText="Usuario" style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #fcba03;" />
+                  <PasswordField fx:id="pfPassword" layoutX="74.0" layoutY="111.0" promptText="Contraseña" style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #fcba03;" />
                   <Button id="loginBtn" alignment="CENTER" graphicTextGap="6.0" layoutX="91.0" layoutY="176.0" lineSpacing="2.0" mnemonicParsing="false" onAction="#loginUser" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: #16b823; -fx-text-fill: #ffffff;" text="Login" />
                   <Button fx:id="createUserBtn" layoutX="105.0" layoutY="245.0" mnemonicParsing="false" onAction="#createUser" text="Crear usuario" />
                </children>
             </AnchorPane>
             <ImageView fitHeight="400.0" fitWidth="500.0" layoutX="31.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../logo-renta-cali-269x300.jpg" />
+                  <Image url="@../../logo-renta-cali-269x300.png" />
                </image>
             </ImageView>
          </children>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1305.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="919.0" prefWidth="182.0" style="-fx-background-color: #fcba03; -fx-border-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="223.0" prefWidth="180.0">
+               <children>
+                  <Pane prefHeight="157.0" prefWidth="180.0">
+                     <children>
+                        <BorderPane layoutX="32.0" layoutY="5.0" prefHeight="91.0" prefWidth="117.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: black;">
+                           <center>
+                              <ImageView fitHeight="60.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../../noUser.png" />
+                                 </image>
+                              </ImageView>
+                           </center>
+                        </BorderPane>
+                        <Label fx:id="currentUser_Username" layoutX="76.0" layoutY="109.0" text="Label" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <Accordion prefHeight="248.0" prefWidth="223.0">
+              <panes>
+                <TitledPane animated="false" text="User" />
+                <TitledPane animated="false" />
+                  <TitledPane animated="false" layoutX="10.0" layoutY="35.0" text="Inventario">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fcba03;">
+                           <children>
+                              <Hyperlink onAction="#hyperLinkInv" text="Inventario" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Perfiles">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fcba03;">
+                           <children>
+                              <Hyperlink fx:id="hyperLinkClients" onAction="#hyperLinkClients" prefHeight="23.0" prefWidth="69.0" text="Clientes" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
+                              <Hyperlink fx:id="hyperLinkEmployees" onAction="#hyperLinkEmployees" text="Empleados" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
+                              <Hyperlink fx:id="hyperLinkUsers" onAction="#hyperLinkUsers" text="Usuarios" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+              </panes>
+            </Accordion>
+            <BorderPane prefHeight="398.0" prefWidth="180.0">
+               <bottom>
+                  <ImageView fitHeight="178.0" fitWidth="180.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../../../../../../Downloads/easy-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+               </bottom>
+            </BorderPane>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <BorderPane fx:id="changePane" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
