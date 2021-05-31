@@ -50,6 +50,11 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Hyperlink>
+                              <Hyperlink onAction="#hyperLinkCobro" text="Generar cobro" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
                            </children>
                         </VBox>
                      </content></TitledPane>
@@ -57,7 +62,11 @@
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fcba03;">
                            <children>
-                              <Hyperlink onAction="#hyperLinkInv" text="Inventario" textFill="WHITE" />
+                              <Hyperlink onAction="#hyperLinkInv" text="Inventario" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+				</Hyperlink>
                            </children>
                         </VBox>
                      </content>
@@ -76,7 +85,11 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Hyperlink>
-                              <Hyperlink fx:id="hyperLinkUsers" onAction="#hyperLinkUsers" text="Usuarios" textFill="WHITE" />
+                              <Hyperlink fx:id="hyperLinkUsers" onAction="#hyperLinkUsers" text="Usuarios" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+				</Hyperlink>
                            </children>
                         </VBox>
                      </content>

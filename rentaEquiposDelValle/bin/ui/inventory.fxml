@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: grey; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <Pane prefHeight="727.0" prefWidth="220.0" style="-fx-border-width: 0 1 0 0; -fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
@@ -26,22 +25,24 @@
             <TextField fx:id="InvNavName" layoutX="10.0" layoutY="192.0" onAction="#InvNavName" prefHeight="25.0" prefWidth="200.0" />
             <Label layoutX="10.0" layoutY="165.0" text="Busqueda por Nombre :" textFill="WHITE" />
             <Button layoutX="10.0" layoutY="227.0" mnemonicParsing="false" onAction="#InvNavSearchBtn" prefHeight="25.0" prefWidth="200.0" text="Buscar" />
-            <Label layoutX="63.0" layoutY="314.0" prefHeight="30.0" prefWidth="94.0" text="AGREGAR" textFill="WHITE">
+            <Label layoutX="63.0" layoutY="281.0" prefHeight="30.0" prefWidth="94.0" text="AGREGAR" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <ComboBox fx:id="InvAddType" layoutX="12.0" layoutY="430.0" onAction="#InvAddType" prefHeight="25.0" prefWidth="198.0" />
-            <Label layoutX="14.0" layoutY="406.0" text="Tipo :" textFill="WHITE" />
-            <TextField fx:id="InvAddName" layoutX="11.0" layoutY="496.0" prefWidth="200.0" />
-            <Label layoutX="15.0" layoutY="472.0" text="Nombre :" textFill="WHITE" />
-            <Label layoutX="96.0" layoutY="344.0" />
-            <Label layoutX="11.0" layoutY="344.0" prefHeight="53.0" prefWidth="199.0" text="Porfavor, llenar los siguientes campos para agregar un nuevo producto al inventario" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
-            <TextField fx:id="InvAddNumber" layoutX="71.0" layoutY="556.0" prefHeight="25.0" prefWidth="138.0" />
-            <Label layoutX="15.0" layoutY="560.0" text="Numero :" textFill="WHITE" />
-            <TextField fx:id="InvAddSerial" layoutX="11.0" layoutY="622.0" prefWidth="200.0" />
-            <Label layoutX="14.0" layoutY="598.0" text="No. de Serie :" textFill="WHITE" />
-            <Button fx:id="InvAddAdd" layoutX="81.0" layoutY="675.0" mnemonicParsing="false" text="Agregar" />
+            <ComboBox fx:id="InvAddType" layoutX="12.0" layoutY="397.0" onAction="#InvAddType" prefHeight="25.0" prefWidth="198.0" />
+            <Label layoutX="14.0" layoutY="373.0" text="Tipo :" textFill="WHITE" />
+            <TextField fx:id="InvAddName" layoutX="11.0" layoutY="538.0" prefWidth="200.0" />
+            <Label layoutX="15.0" layoutY="514.0" text="Nombre :" textFill="WHITE" />
+            <Label layoutX="96.0" layoutY="311.0" />
+            <Label layoutX="11.0" layoutY="311.0" prefHeight="53.0" prefWidth="199.0" text="Porfavor, llenar los siguientes campos para agregar un nuevo producto al inventario" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+            <TextField fx:id="InvAddNumber" layoutX="71.0" layoutY="598.0" prefHeight="25.0" prefWidth="138.0" />
+            <Label layoutX="15.0" layoutY="602.0" text="Numero :" textFill="WHITE" />
+            <TextField fx:id="InvAddSerial" layoutX="11.0" layoutY="664.0" prefWidth="200.0" />
+            <Label layoutX="14.0" layoutY="640.0" text="No. de Serie :" textFill="WHITE" />
+            <Button fx:id="InvAddAdd" layoutX="81.0" layoutY="695.0" mnemonicParsing="false" text="Agregar" />
+            <TextField fx:id="InvAddBrand" layoutX="11.0" layoutY="469.0" prefWidth="200.0" />
+            <Label layoutX="15.0" layoutY="445.0" text="Marca :" textFill="WHITE" />
          </children>
       </Pane>
    </left>
@@ -50,14 +51,15 @@
          <children>
             <TableView fx:id="tvInv" prefHeight="545.0" prefWidth="898.0">
               <columns>
-                <TableColumn fx:id="tvType" prefWidth="111.0" text="TIPO" />
-                <TableColumn fx:id="tvName" prefWidth="517.0" text="NOMBRE" />
-                  <TableColumn fx:id="tvNumber" prefWidth="62.0" resizable="false" text="N#" />
-                  <TableColumn fx:id="tvStatus" prefWidth="130.0" resizable="false" text="ESTADO" />
-                  <TableColumn fx:id="tvMoreInfo" prefWidth="84.0" resizable="false" />
+                <TableColumn fx:id="tvType" prefWidth="99.0" text="TIPO" />
+                <TableColumn fx:id="tvBrand" prefWidth="139.0" text="MARCA" />
+                  <TableColumn fx:id="tvName" prefWidth="396.0" resizable="false" text="NOMBRE" />
+                  <TableColumn fx:id="tvNumber" prefWidth="82.0" resizable="false" text="NUMERO" />
+                  <TableColumn fx:id="tvStatus" prefWidth="128.0" resizable="false" text="ESTADO" />
+                  <TableColumn fx:id="tvMoreInfo" minWidth="0.0" prefWidth="58.0" />
               </columns>
             </TableView>
-            <Label fx:id="moreInfoLabel" prefHeight="185.0" prefWidth="922.0" />
+            <Label fx:id="moreInfoLabel" prefHeight="185.0" prefWidth="922.0" text="info" textFill="WHITE" />
          </children>
       </VBox>
    </center>

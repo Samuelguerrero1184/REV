@@ -158,18 +158,28 @@ public class RentaGUI {
     
 
     @FXML
-    void HyperLinkDevolucion(ActionEvent event) {
-
+    void HyperLinkDevolucion(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("devolucion.fxml"));
+		
+		fxmlLoader.setController(this);    	
+		Parent addPane = fxmlLoader.load();
+    	
+    	changePane.setCenter(addPane);
     }
     
     @FXML
-    void hyperLinkRemision(ActionEvent event) {
-
+    void hyperLinkRemision(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("remision.fxml"));
+		
+		fxmlLoader.setController(this);    	
+		Parent addPane = fxmlLoader.load();
+    	
+    	changePane.setCenter(addPane);
     }
 
     @FXML
     void hyperLinkClients(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("users.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("clients.fxml"));
 		
 		fxmlLoader.setController(this);    	
 		Parent addPane = fxmlLoader.load();
@@ -179,7 +189,7 @@ public class RentaGUI {
 
     @FXML
     void hyperLinkEmployees(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("users.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("employee.fxml"));
 		
 		fxmlLoader.setController(this);    	
 		Parent addPane = fxmlLoader.load();
@@ -208,6 +218,16 @@ public class RentaGUI {
     	changePane.setCenter(addPane);
     }
     
+    @FXML
+    void hyperLinkCobro(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cobro.fxml"));
+		
+		fxmlLoader.setController(this);    	
+		Parent addPane = fxmlLoader.load();
+    	
+    	changePane.setCenter(addPane);
+    }
+    
     //---------------------------------------------------------------Inventory--------------------------------------------------------
     
     @FXML
@@ -215,6 +235,9 @@ public class RentaGUI {
 
     @FXML
     private TableColumn<?, ?> tvType;
+    
+    @FXML
+    private TableColumn<?, ?> tvBrand;
 
     @FXML
     private TableColumn<?, ?> tvName;
@@ -305,6 +328,56 @@ public class RentaGUI {
 		Stage stage = new Stage();
 		stage.setScene(scene);
 		stage.show();
+    }
+  //------------------------------------------------------------employee-------------------------------------------
+    @FXML
+    private TextField EmployeeNavName;
+
+    @FXML
+    void EmployeeNavSearch(ActionEvent event) {
+
+    }
+    //------------------------------------------------------------client-------------------------------------------
+    @FXML
+    private TextField ClientNavName;
+
+    @FXML
+    void ClientNavSearch(ActionEvent event) {
+
+    }
+    
+    
+    
+    //----------------------------------------------------- R&D-----------------------
+    
+    //Remision
+    @FXML
+    void remisionPrint(ActionEvent event) {
+
+    }
+    
+    //Devolucion
+
+    @FXML
+    void devolucionPrint(ActionEvent event) {
+
+    }
+    
+    
+    //------------------------------------------------------COBRO----------------------
+    
+    @FXML
+    private TextField cobroSearch;
+
+    @FXML
+    private Button cobroSearchBtn;
+
+    @FXML
+    private Label cobroEstado;
+
+    @FXML
+    void generateCobro(ActionEvent event) {
+
     }
 
 }
