@@ -26,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Client;
 import model.Employee;
+import model.Machine;
 import model.RentaEquiposDelValle;
 import model.User;
 
@@ -229,6 +230,16 @@ public class RentaGUI {
 		Parent addPane = fxmlLoader.load();
 
 		changePane.setCenter(addPane);
+		invAddGas.getItems().add("ACPM");
+		invAddGas.getItems().add("GASOLINA");
+		invAddGas.getItems().add("ELECTRICO");
+		invAddGas.getItems().add("NO APLICA");
+		
+		InvAddType.getItems().add("Maquina pesada");
+		InvAddType.getItems().add("Maquinas medianas");
+		InvAddType.getItems().add("Maquina pequeña");
+		InvAddType.getItems().add("Cantidades");
+		initializeTvInventory();
 	}
 
 	@FXML
@@ -249,37 +260,48 @@ public class RentaGUI {
 	// ---------------------------------Inventory-----------------------------------------------
 
 	@FXML
-	private TableView<?> tvInv;
+	private TableView<Machine> tvInv;
 
 	@FXML
-	private TableColumn<?, ?> tvType;
+	private TableColumn<Machine, String> tvType;
 
 	@FXML
-	private TableColumn<?, ?> tvBrand;
+	private TableColumn<Machine, String> tvBrand;
 
 	@FXML
-	private TableColumn<?, ?> tvName;
+	private TableColumn<Machine, String> tvName;
 
 	@FXML
-	private TableColumn<?, ?> tvNumber;
+	private TableColumn<Machine, Integer> tvNumber;
 
 	@FXML
-	private TableColumn<?, ?> tvStatus;
+	private TableColumn<Machine, String> tvStatus;
 
 	@FXML
-	private TableColumn<?, ?> tvMoreInfo;
+	private TableColumn<Machine, String> tvMoreInfo;
+	
+    public void initializeTvInventory(){
+    	
+    	ObservableList<Machine> observableList = FXCollections.observableArrayList(rentaEquipos.getMachines());
+    	
+		tvInv.setItems(observableList);
+		tvType.setCellValueFactory(new PropertyValueFactory<Machine, String>("typeMachine")); 
+		tvBrand.setCellValueFactory(new PropertyValueFactory<Machine, String>("brand")); 
+		tvName.setCellValueFactory(new PropertyValueFactory<Machine, String>("name"));
+		tvNumber.setCellValueFactory(new PropertyValueFactory<Machine, Integer>("internalName"));
+    }
 
 	@FXML
 	private Label moreInfoLabel;
 
 	@FXML
-	private ComboBox<?> InvNavType;
+	private ComboBox<String> InvNavType;
 
 	@FXML
 	private TextField InvNavName;
 
 	@FXML
-	private ComboBox<?> InvAddType;
+	private ComboBox<String> InvAddType;
 
 	@FXML
 	private TextField InvAddName;
@@ -292,7 +314,23 @@ public class RentaGUI {
 
 	@FXML
 	private Button InvAddAdd;
+	
+    @FXML
+    private TextField InvAddBrand;
+    
+    @FXML
+    private ComboBox<String> invAddGas;
 
+    @FXML
+    void InvAddAdd(ActionEvent event) {
+    	Machine machine = new Machine(InvAddType.getValue(), InvAddBrand.getText(), InvAddName.getText(), Integer.parseInt(InvAddNumber.getText()), InvAddSerial.getText(), invAddGas.getValue());
+    	rentaEquipos.addCartBinaryTree(machine);
+    	InvAddBrand.clear();
+    	InvAddName.clear();
+    	InvAddNumber.clear();
+    	InvAddSerial.clear();
+    }
+    
 	@FXML
 	void InvAddType(ActionEvent event) {
 

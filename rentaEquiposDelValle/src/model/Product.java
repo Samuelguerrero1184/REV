@@ -4,11 +4,11 @@ public class Product {
 
 	private String name;
 	private String brand;
-	private float serial;
+	private String serial;
 	private int internalNumber;
 	
 	
-	public Product(String name, String brand, float serial, int internalNumber) {
+	public Product(String name, String brand, String serial, int internalNumber) {
 		this.name = name;
 		this.brand = brand;
 		this.serial = serial;
@@ -36,12 +36,12 @@ public class Product {
 	}
 
 
-	public float getSerial() {
+	public String getSerial() {
 		return serial;
 	}
 
 
-	public void setSerial(float serial) {
+	public void setSerial(String serial) {
 		this.serial = serial;
 	}
 

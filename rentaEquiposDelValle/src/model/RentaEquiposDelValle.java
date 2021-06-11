@@ -14,11 +14,14 @@ public class RentaEquiposDelValle {
 	private List<User> users;
 	private List<Client>clients;
 	private List<Employee>employee;
+	private List<Machine>machines;
+	private Machine root;
 
 	public RentaEquiposDelValle() {
 		users = new ArrayList<>();
 		employee = new ArrayList<>();
 		clients = new ArrayList<>();
+		machines = new ArrayList<>();
 	}
 
 	// ---------------------------------------------GETTERS & SETTERS-----------------------------------------------
@@ -32,6 +35,26 @@ public class RentaEquiposDelValle {
 
 	public List<Employee> getEmployee() {
 		return employee;
+	}
+	
+	public List<Machine> getMachines() {
+		return machines;
+	}
+	//----------------------------------------------TEXTOPLANO-----------------------------------------
+	
+	/*public void exportData(String fileName) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(fileName);
+		for (int i = 0; i < array.length; i++) {
+			
+		}
+	}*/
+
+	public Machine getRoot() {
+		return root;
+	}
+
+	public void importData() {
+		
 	}
 
 	// ----------------------------------------------SERIALIZATION---------------------------------------------------
@@ -378,6 +401,50 @@ public class RentaEquiposDelValle {
 	
 	public String toStringClient(Client client) {
 		return "Esta es la informcaion del Cliente :"+" \n"+client.getName()+" "+client.getLastname()+" "+client.getId()+" "+client.getAddress()+" "+client.getPhone();
+	}
+	
+	//---------------------------------BINARY TREE---------------------------------------
+	
+	public void addCartBinaryTree(Machine newMachine) {
+		if(root == null) {
+			root = newMachine;
+			machines.add(newMachine);
+		} else {
+			addCartBinaryTree(root, newMachine);
+		}
+	}
+
+	private void addCartBinaryTree(Machine current, Machine newMachine) {
+		if(current.getName().compareToIgnoreCase(newMachine.getName())<1) {
+			if(current.getLeft()==null) {
+				current.setLeft(newMachine);
+				newMachine.setFather(current);
+				machines.add(newMachine);
+			}else {
+				addCartBinaryTree(current.getLeft(),newMachine);
+			}
+		}else {
+			if(current.getRight()==null) {
+				current.setRight(newMachine);
+				newMachine.setFather(current);
+				machines.add(newMachine);
+			}else {
+				addCartBinaryTree(current.getRight(),newMachine);
+			}
+		}
+	}
+	
+	private Machine searchMachine(Machine current, String name) {
+		if(current==null||current.getName()==name) {
+			return current;
+		}
+		else {
+			if(name.compareToIgnoreCase(current.getName())<1) {
+				return searchMachine(current.getLeft(), name);
+			}else {
+				return searchMachine(current.getRight(), name);
+			}
+		}
 	}
 	
 }

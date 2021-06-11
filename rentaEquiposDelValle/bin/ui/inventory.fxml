@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: grey; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: grey; -fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <Pane prefHeight="727.0" prefWidth="220.0" style="-fx-border-width: 0 1 0 0; -fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
@@ -32,17 +32,19 @@
             </Label>
             <ComboBox fx:id="InvAddType" layoutX="12.0" layoutY="397.0" onAction="#InvAddType" prefHeight="25.0" prefWidth="198.0" />
             <Label layoutX="14.0" layoutY="373.0" text="Tipo :" textFill="WHITE" />
-            <TextField fx:id="InvAddName" layoutX="11.0" layoutY="538.0" prefWidth="200.0" />
-            <Label layoutX="15.0" layoutY="514.0" text="Nombre :" textFill="WHITE" />
+            <TextField fx:id="InvAddName" layoutX="11.0" layoutY="499.0" prefWidth="200.0" />
+            <Label layoutX="15.0" layoutY="475.0" text="Nombre :" textFill="WHITE" />
             <Label layoutX="96.0" layoutY="311.0" />
             <Label layoutX="11.0" layoutY="311.0" prefHeight="53.0" prefWidth="199.0" text="Porfavor, llenar los siguientes campos para agregar un nuevo producto al inventario" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
-            <TextField fx:id="InvAddNumber" layoutX="71.0" layoutY="598.0" prefHeight="25.0" prefWidth="138.0" />
-            <Label layoutX="15.0" layoutY="602.0" text="Numero :" textFill="WHITE" />
-            <TextField fx:id="InvAddSerial" layoutX="11.0" layoutY="664.0" prefWidth="200.0" />
-            <Label layoutX="14.0" layoutY="640.0" text="No. de Serie :" textFill="WHITE" />
-            <Button fx:id="InvAddAdd" layoutX="81.0" layoutY="695.0" mnemonicParsing="false" text="Agregar" />
-            <TextField fx:id="InvAddBrand" layoutX="11.0" layoutY="469.0" prefWidth="200.0" />
-            <Label layoutX="15.0" layoutY="445.0" text="Marca :" textFill="WHITE" />
+            <TextField fx:id="InvAddNumber" layoutX="71.0" layoutY="535.0" prefHeight="25.0" prefWidth="138.0" />
+            <Label layoutX="15.0" layoutY="539.0" text="Numero :" textFill="WHITE" />
+            <TextField fx:id="InvAddSerial" layoutX="11.0" layoutY="587.0" prefWidth="200.0" />
+            <Label layoutX="14.0" layoutY="563.0" text="No. de Serie :" textFill="WHITE" />
+            <Button fx:id="InvAddAdd" layoutX="81.0" layoutY="687.0" mnemonicParsing="false" onAction="#InvAddAdd" text="Agregar" />
+            <TextField fx:id="InvAddBrand" layoutX="11.0" layoutY="448.0" prefWidth="200.0" />
+            <Label layoutX="14.0" layoutY="424.0" text="Marca :" textFill="WHITE" />
+            <Label layoutX="15.0" layoutY="621.0" text="Tipo combustible :" textFill="WHITE" />
+            <ComboBox fx:id="invAddGas" layoutX="13.0" layoutY="644.0" prefWidth="200.0" />
          </children>
       </Pane>
    </left>
