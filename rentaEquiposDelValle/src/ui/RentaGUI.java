@@ -1,7 +1,10 @@
 package ui;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -17,9 +21,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Client;
+import model.Employee;
 import model.RentaEquiposDelValle;
+import model.User;
 
 public class RentaGUI {
 
@@ -29,13 +37,15 @@ public class RentaGUI {
 	public RentaGUI() {
 		rentaEquipos = new RentaEquiposDelValle();
 	}
-	
-	public void initialize () throws ClassNotFoundException, IOException {
+
+	public void initialize() throws ClassNotFoundException, IOException {
 		rentaEquipos.load();
 	}
-	
-	//------------------------------------------LOGIN INTERFACE----------------------------------
 
+	// ------------------------------------------LOGIn INTERFACE----------------------------------
+
+	private Stage stage;
+	
 	@FXML
 	private BorderPane mainPane;
 
@@ -55,20 +65,22 @@ public class RentaGUI {
 		fxmlloader.setController(this);
 		Parent menu = fxmlloader.load();
 		Scene scene = new Scene(menu);
-		Stage stage = new Stage();
+		stage = new Stage();
 		stage.setScene(scene);
 		stage.show();
 	}
 
 	@FXML
 	void loginUser(ActionEvent event) throws IOException {
-    	if(txtUsername.getText().equals(rentaEquipos.searchUserName(txtUsername.getText()))) {
-    		if(pfPassword.getText().equals(rentaEquipos.searchUserPassword(pfPassword.getText()))) {
+		if (txtUsername.getText().equals(rentaEquipos.searchUserName(txtUsername.getText()))) {
+			if (pfPassword.getText().equals(rentaEquipos.searchUserPassword(pfPassword.getText()))) {
 				// loadMenu();
+				
 				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("index.fxml"));
 
 				Stage stage1 = (Stage) mainPane.getScene().getWindow();
 				currentUser = txtUsername.getText();
+
 				stage1.close();
 
 				fxmlloader.setController(this);
@@ -76,18 +88,20 @@ public class RentaGUI {
 				Scene scene = new Scene(menu);
 				Stage stage = new Stage();
 				stage.setScene(scene);
-				stage.setTitle("La casa Dorada");
+				stage.setTitle("RENTA EQUIPOS DEL VALLE S.A.S");
 				// stage.setResizable(false);
 				stage.show();
-
-			} else {
+				currentUser_Username.setText(currentUser.toUpperCase());
+			} 
+			
+			else {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Wrong username or password");
 				alert.setHeaderText("Wrong username or password");
 				alert.setContentText("Wrong username or password");
 				alert.showAndWait();
-				txtUsername.clear();
-				pfPassword.clear();
+				txtUsername.setText("");
+				pfPassword.setText("");
 			}
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -95,13 +109,13 @@ public class RentaGUI {
 			alert.setHeaderText("Wrong username or password");
 			alert.setContentText("Wrong username or password");
 			alert.showAndWait();
-			txtUsername.clear();
-			pfPassword.clear();
+			txtUsername.setText("");
+			pfPassword.setText("");
 		}
-    	currentUser_Username.setText(currentUser);
+		
 	}
 
-	//------------------------------------------Add new user GUI-------------------------------------------
+	// ------------------------------------------Add new user GUI-------------------------------------------
 	@FXML
 	private BorderPane addUserPane;
 
@@ -124,202 +138,237 @@ public class RentaGUI {
 	private Label statusUser;
 
 	@FXML
-    void addUser(ActionEvent event) throws IOException {
-    
-  	//add contact in the model        
-	rentaEquipos.addUser(userName.getText(),userLastname.getText(),Integer.parseInt(userId.getText()),userUser.getText(),userPassword.getText());
-	//clean the fields in the gui       
-	userName.setText("");
-	userLastname.setText("");
-	userId.setText("");
-	userUser.setText("");
-	userPassword.setText("");
-	//show the success message
-	statusUser.setText("Agregado!");
-    }
+	void addUser(ActionEvent event) throws IOException {
+		User user = new User(userName.getText().toUpperCase(), userLastname.getText().toUpperCase(), userId.getText(),
+				userUser.getText(), userPassword.getText());
+		rentaEquipos.addUser(user);
+		userName.setText("");
+		userLastname.setText("");
+		userId.setText("");
+		userUser.setText("");
+		userPassword.setText("");
+		// show the success message
+		statusUser.setText("Agregado!");
+	}
+
+	// --------------------------------------------------------------INDEX
+	// INTERFACE-------------------------------------------------------
+
+	@FXML
+	private Label currentUser_Username;
+
+	@FXML
+	private BorderPane changePane;
+
+	@FXML
+	private Hyperlink hyperLinkClients;
+
+	@FXML
+	private Hyperlink hyperLinkEmployees;
+
+	@FXML
+	private Hyperlink hyperLinkUsers;
+
+	@FXML
+	void HyperLinkDevolucion(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("devolucion.fxml"));
+
+		fxmlLoader.setController(this);
+		Parent addPane = fxmlLoader.load();
+
+		changePane.setCenter(addPane);
+	}
+
+	@FXML
+	void hyperLinkRemision(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("remision.fxml"));
+
+		fxmlLoader.setController(this);
+		Parent addPane = fxmlLoader.load();
+
+		changePane.setCenter(addPane);
+	}
+
+	@FXML
+	void hyperLinkClients(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("clients.fxml"));
+
+		fxmlLoader.setController(this);
+		Parent addPane = fxmlLoader.load();
+
+		changePane.setCenter(addPane);
+	}
+
+	@FXML
+	void hyperLinkEmployees(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("employee.fxml"));
+
+		fxmlLoader.setController(this);
+		Parent addPane = fxmlLoader.load();
+
+		changePane.setCenter(addPane);
+		initializeTvEmployees();
+	}
+
+	@FXML
+	void hyperLinkUsers(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("users.fxml"));
+
+		fxmlLoader.setController(this);
+		Parent addPane = fxmlLoader.load();
+
+		changePane.setCenter(addPane);
+		initializeTvUsers();
+	}
+
+	@FXML
+	void hyperLinkInv(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("inventory.fxml"));
+
+		fxmlLoader.setController(this);
+		Parent addPane = fxmlLoader.load();
+
+		changePane.setCenter(addPane);
+	}
+
+	@FXML
+	void hyperLinkCobro(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cobro.fxml"));
+
+		fxmlLoader.setController(this);
+		Parent addPane = fxmlLoader.load();
+
+		changePane.setCenter(addPane);
+	}
+
+	@FXML
+	void hyperLinkChangePsw(ActionEvent event) {
+
+	}
+
+	// ---------------------------------------------------------------Inventory--------------------------------------------------------
+
+	@FXML
+	private TableView<?> tvInv;
+
+	@FXML
+	private TableColumn<?, ?> tvType;
+
+	@FXML
+	private TableColumn<?, ?> tvBrand;
+
+	@FXML
+	private TableColumn<?, ?> tvName;
+
+	@FXML
+	private TableColumn<?, ?> tvNumber;
+
+	@FXML
+	private TableColumn<?, ?> tvStatus;
+
+	@FXML
+	private TableColumn<?, ?> tvMoreInfo;
+
+	@FXML
+	private Label moreInfoLabel;
+
+	@FXML
+	private ComboBox<?> InvNavType;
+
+	@FXML
+	private TextField InvNavName;
+
+	@FXML
+	private ComboBox<?> InvAddType;
+
+	@FXML
+	private TextField InvAddName;
+
+	@FXML
+	private TextField InvAddNumber;
+
+	@FXML
+	private TextField InvAddSerial;
+
+	@FXML
+	private Button InvAddAdd;
+
+	@FXML
+	void InvAddType(ActionEvent event) {
+
+	}
+
+	@FXML
+	void InvNavName(ActionEvent event) {
+
+	}
+
+	@FXML
+	void InvNavSearchBtn(ActionEvent event) {
+
+	}
+
+	@FXML
+	void InvNavType(ActionEvent event) {
+
+	}
+
+	// ------------------------------------------------------------USERS-------------------------------------------
+
+	@FXML
+	private TextField UserNavName;
 	
-	//--------------------------------------------------------------INDEX INTERFACE-------------------------------------------------------
-
-
     @FXML
-    private Label currentUser_Username;
-	
-    @FXML
-    private BorderPane changePane;
-	
-    @FXML
-    private Hyperlink hyperLinkClients;
+    private TableView<User> tvUsers;
 
     @FXML
-    private Hyperlink hyperLinkEmployees;
+    private TableColumn<User, String> tcUserName;
 
     @FXML
-    private Hyperlink hyperLinkUsers;
+    private TableColumn<User, String> tcUserLastName;
+
+    @FXML
+    private TableColumn<User, String> tcUserId;
+
+    @FXML
+    private TableColumn<User, String> tcUserUsername;
     
-
-    @FXML
-    void HyperLinkDevolucion(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("devolucion.fxml"));
-		
-		fxmlLoader.setController(this);    	
-		Parent addPane = fxmlLoader.load();
+    public void initializeTvUsers(){
+    	ObservableList<User> observableList = FXCollections.observableArrayList(rentaEquipos.getUsers());
     	
-    	changePane.setCenter(addPane);
-    }
-    
-    @FXML
-    void hyperLinkRemision(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("remision.fxml"));
-		
-		fxmlLoader.setController(this);    	
-		Parent addPane = fxmlLoader.load();
-    	
-    	changePane.setCenter(addPane);
+		tvUsers.setItems(observableList);
+		tcUserName.setCellValueFactory(new PropertyValueFactory<User,String>("name")); 
+		tcUserLastName.setCellValueFactory(new PropertyValueFactory<User,String>("lastname")); 
+		tcUserId.setCellValueFactory(new PropertyValueFactory<User,String>("id"));
+		tcUserUsername.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
     }
 
-    @FXML
-    void hyperLinkClients(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("clients.fxml"));
-		
-		fxmlLoader.setController(this);    	
-		Parent addPane = fxmlLoader.load();
-    	
-    	changePane.setCenter(addPane);
-    }
+	@FXML
+	private Label UserInfo;
 
     @FXML
-    void hyperLinkEmployees(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("employee.fxml"));
-		
-		fxmlLoader.setController(this);    	
-		Parent addPane = fxmlLoader.load();
-    	
-    	changePane.setCenter(addPane);
-    }
+    private Button userDelete;
 
-    @FXML
-    void hyperLinkUsers(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("users.fxml"));
-		
-		fxmlLoader.setController(this);    	
-		Parent addPane = fxmlLoader.load();
-    	
-    	changePane.setCenter(addPane);
-    }
-    
+	@FXML
+	void UserDelete(ActionEvent event) throws IOException {
+		rentaEquipos.binaryDeleteUser(UserNavName.getText());
+	}
 
-    @FXML
-    void hyperLinkInv(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("inventory.fxml"));
-		
-		fxmlLoader.setController(this);    	
-		Parent addPane = fxmlLoader.load();
-    	
-    	changePane.setCenter(addPane);
-    }
-    
-    @FXML
-    void hyperLinkCobro(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cobro.fxml"));
-		
-		fxmlLoader.setController(this);    	
-		Parent addPane = fxmlLoader.load();
-    	
-    	changePane.setCenter(addPane);
-    }
-    
-    //---------------------------------------------------------------Inventory--------------------------------------------------------
-    
-    @FXML
-    private TableView<?> tvInv;
+	@FXML
+	void UserNavSearch(ActionEvent event) {
+		if(UserNavName.getText() != null) {
+		UserInfo.setText(rentaEquipos.toStringUser(rentaEquipos.binarySearchUser(UserNavName.getText())));
+		}
+		userDelete.setVisible(true);
+	}
 
-    @FXML
-    private TableColumn<?, ?> tvType;
-    
-    @FXML
-    private TableColumn<?, ?> tvBrand;
+	@FXML
+	void UserSaveChanges(ActionEvent event) {
 
-    @FXML
-    private TableColumn<?, ?> tvName;
+	}
 
-    @FXML
-    private TableColumn<?, ?> tvNumber;
-
-    @FXML
-    private TableColumn<?, ?> tvStatus;
-
-    @FXML
-    private TableColumn<?, ?> tvMoreInfo;
-
-    @FXML
-    private Label moreInfoLabel;
-
-    @FXML
-    private ComboBox<?> InvNavType;
-
-    @FXML
-    private TextField InvNavName;
-
-    @FXML
-    private ComboBox<?> InvAddType;
-
-    @FXML
-    private TextField InvAddName;
-
-    @FXML
-    private TextField InvAddNumber;
-
-    @FXML
-    private TextField InvAddSerial;
-
-    @FXML
-    private Button InvAddAdd;
-
-    @FXML
-    void InvAddType(ActionEvent event) {
-
-    }
-
-    @FXML
-    void InvNavName(ActionEvent event) {
-
-    }
-
-    @FXML
-    void InvNavSearchBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void InvNavType(ActionEvent event) {
-
-    }
-    
-    //------------------------------------------------------------USERS-------------------------------------------
-    
-    @FXML
-    private TextField UserNavName;
-
-    @FXML
-    private Label UserInfo;
-
-    @FXML
-    void UserDelete(ActionEvent event) {
-
-    }
-
-    @FXML
-    void UserNavSearch(ActionEvent event) {
-
-    }
-
-    @FXML
-    void UserSaveChanges(ActionEvent event) {
-
-    }
-
-    @FXML
-    void hyperLinkNewUser(ActionEvent event) throws IOException {
+	@FXML
+	void hyperLinkNewUser(ActionEvent event) throws IOException {
 		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("addUserGUI.fxml"));
 
 		fxmlloader.setController(this);
@@ -328,56 +377,248 @@ public class RentaGUI {
 		Stage stage = new Stage();
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	// ------------------------------------------------------------employee-------------------------------------------
+	@FXML
+	private TextField EmployeeNavName;
+	
+    @FXML
+    private TableView<Employee> tvEmployees;
+
+    @FXML
+    private TableColumn<Employee, String> tcEmployeeName;
+
+    @FXML
+    private TableColumn<Employee, String> tcEmployeeLastName;
+
+    @FXML
+    private TableColumn<Employee, String> tcEmployeeId;
+    
+    @FXML
+    private TableColumn<Employee, LocalDate> tcEmployeeBirth;
+
+    @FXML
+    private TableColumn<Employee, String> tcEmployeeSizeShirt;
+
+    @FXML
+    private TableColumn<Employee, String> tcEmployeeSizePants;
+
+    @FXML
+    private TableColumn<Employee, String> tcEmployeeSizeShoes;
+
+    @FXML
+    private TableColumn<Employee, LocalDate> tcEmployeeEntryDate;
+    
+    @FXML
+    private Label employeeInfo;
+    
+    public void initializeTvEmployees(){
+    	ObservableList<Employee> observableList = FXCollections.observableArrayList(rentaEquipos.getEmployee());
+    	
+		tvEmployees.setItems(observableList);
+		tcEmployeeName.setCellValueFactory(new PropertyValueFactory<Employee,String>("name")); 
+		tcEmployeeLastName.setCellValueFactory(new PropertyValueFactory<Employee,String>("lastname")); 
+		tcEmployeeId.setCellValueFactory(new PropertyValueFactory<Employee,String>("id"));
+		tcEmployeeBirth.setCellValueFactory(new PropertyValueFactory<Employee, LocalDate>("birthDay"));
+		tcEmployeeSizeShirt.setCellValueFactory(new PropertyValueFactory<Employee, String>("shirtSize"));
+		tcEmployeeSizePants.setCellValueFactory(new PropertyValueFactory<Employee, String>("pantsSize"));
+		tcEmployeeSizeShoes.setCellValueFactory(new PropertyValueFactory<Employee, String>("shoesSize"));
+		tcEmployeeEntryDate.setCellValueFactory(new PropertyValueFactory<Employee, LocalDate>("entryDate"));
     }
-  //------------------------------------------------------------employee-------------------------------------------
-    @FXML
-    private TextField EmployeeNavName;
+
+	@FXML
+	void EmployeeNavSearch(ActionEvent event) {
+		if(EmployeeNavName.getText() != null) {
+		employeeInfo.setText(rentaEquipos.binarySearchEmployee(EmployeeNavName.getText()));
+		}
+		deleteEmployee.setVisible(true);
+	}
 
     @FXML
-    void EmployeeNavSearch(ActionEvent event) {
-
+    private Button deleteEmployee;
+	
+    @FXML
+    void DeleteEmployee(ActionEvent event) {
+    	employeeInfo.setText(rentaEquipos.binaryDeleteEmployee(EmployeeNavName.getText()));
     }
-    //------------------------------------------------------------client-------------------------------------------
+
+	private Stage popStage;
+	
+	@FXML
+	void hyperLinkNewEmployee(ActionEvent event) throws IOException {
+
+		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("addEmployee.fxml"));
+
+		fxmlloader.setController(this);
+		Parent menu = fxmlloader.load();
+		Scene scene = new Scene(menu);
+		popStage = new Stage();
+		popStage.setScene(scene);
+		popStage.show();
+
+	}
+	
+	//--------------------------------Employee pop up window-----------------------------------
+	
     @FXML
-    private TextField ClientNavName;
+    private TextField newEmployeeName;
 
     @FXML
-    void ClientNavSearch(ActionEvent event) {
+    private TextField newEmployeeLname;
 
+    @FXML
+    private TextField newEmployeeId;
+    
+    @FXML
+    private TextField newEmployeeShirtSize;
+
+    @FXML
+    private TextField newEmployeeSizePants;
+
+    @FXML
+    private TextField newEmployeeSizeShoe;
+
+    @FXML
+    private DatePicker newEmployeeEntryDate;
+
+    @FXML
+    private DatePicker newEmployeeBirthDay;
+
+	@FXML
+	void addEmployeeBtn(ActionEvent event) throws NumberFormatException, IOException {
+		Employee employee = new Employee(newEmployeeName.getText().toUpperCase(), newEmployeeLname.getText().toUpperCase(), newEmployeeId.getText(),
+				newEmployeeBirthDay.getValue(), newEmployeeShirtSize.getText(), newEmployeeSizePants.getText(),
+				newEmployeeSizeShoe.getText(), newEmployeeEntryDate.getValue());
+		rentaEquipos.addEmployee(employee);
+		popStage.close();
+		FXMLLoader fxmlloader2 = new FXMLLoader(getClass().getResource("employee.fxml"));
+		fxmlloader2.setController(this);
+		Parent reLoad = fxmlloader2.load();
+		changePane.getChildren().clear();
+		changePane.setCenter(reLoad);
+		initializeTvEmployees();
+	}
+
+    @FXML
+    void employeeClearBtn(ActionEvent event) {
+    	newEmployeeId.clear();
+    	newEmployeeLname.clear();
+    	newEmployeeName.clear();
     }
-    
-    
-    
-    //----------------------------------------------------- R&D-----------------------
-    
-    //Remision
-    @FXML
-    void remisionPrint(ActionEvent event) {
 
+	// ------------------------------------------------------------client-------------------------------------------
+	@FXML
+	private TextField ClientNavName;
+
+	@FXML
+	void ClientNavSearch(ActionEvent event) {
+
+	}
+	
+    @FXML
+    private TableView<Client> tvClients;
+
+    @FXML
+    private TableColumn<Client, String> tcClientName;
+
+    @FXML
+    private TableColumn<Client, String> tcClientLastName;
+
+    @FXML
+    private TableColumn<Client, String> tcClientId;
+
+    @FXML
+    private TableColumn<Client, String> tcClientAddress;
+
+    @FXML
+    private TableColumn<Client, String> tcClientPhone;
+
+    @FXML
+    void hyperlinkAddNewClient(ActionEvent event) throws IOException {
+		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("addClient.fxml"));
+
+		fxmlloader.setController(this);
+		Parent menu = fxmlloader.load();
+		Scene scene = new Scene(menu);
+		popStage = new Stage();
+		popStage.setScene(scene);
+		popStage.show();
     }
+
+    //-------------------------------------------------------------------------------
     
-    //Devolucion
+    @FXML
+    private TextField newClientName;
 
     @FXML
-    void devolucionPrint(ActionEvent event) {
+    private TextField newClientLname;
 
+    @FXML
+    private TextField newClientId;
+
+    @FXML
+    private TextField newClientPhone;
+
+    @FXML
+    private TextField newClientAddress;
+
+    @FXML
+    void addClientBtn(ActionEvent event) throws IOException {
+		rentaEquipos.addClient(newClientName.getText().toUpperCase(),newClientLname.getText().toUpperCase(),newClientId.getText(),newClientAddress.getText(),newClientPhone.getText());
+		popStage.close();
+		FXMLLoader fxmlloader2 = new FXMLLoader(getClass().getResource("employee.fxml"));
+		fxmlloader2.setController(this);
+		Parent reLoad = fxmlloader2.load();
+		changePane.getChildren().clear();
+		changePane.setCenter(reLoad);
+		initializeTvEmployees();
     }
-    
-    
-    //------------------------------------------------------COBRO----------------------
-    
-    @FXML
-    private TextField cobroSearch;
 
     @FXML
-    private Button cobroSearchBtn;
+    void clientClearBtn(ActionEvent event) {
 
-    @FXML
-    private Label cobroEstado;
-
-    @FXML
-    void generateCobro(ActionEvent event) {
-
+    	newClientAddress.clear();
+    	newClientId.clear();
+    	newClientLname.clear();
+    	newClientName.clear();
+    	newClientPhone.clear();
+    	
     }
+
+    
+    
+    
+    
+	// -----------------------------------------------------R&D-----------------------
+
+	// Remision
+	@FXML
+	void remisionPrint(ActionEvent event) {
+
+	}
+
+	// Devolucion
+
+	@FXML
+	void devolucionPrint(ActionEvent event) {
+
+	}
+
+	// ------------------------------------------------------COBRO----------------------
+
+	@FXML
+	private TextField cobroSearch;
+
+	@FXML
+	private Button cobroSearchBtn;
+
+	@FXML
+	private Label cobroEstado;
+
+	@FXML
+	void generateCobro(ActionEvent event) {
+
+	}
 
 }

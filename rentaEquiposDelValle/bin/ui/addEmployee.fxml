@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="85.0" prefWidth="760.0" style="-fx-background-color: #fcba03; -fx-border-width: 0 0 0 1; -fx-border-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="85.0" fitWidth="200.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../REV.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="178.0" prefHeight="85.0" prefWidth="611.0" style="-fx-border-color: black; -fx-border-width: 0 1 1 1;" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 1 1 1;" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane layoutX="49.0" layoutY="83.0" prefHeight="269.0" prefWidth="350.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="123.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="227.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Nombre :" />
+                  <Label text="Apellido : " GridPane.rowIndex="1" />
+                  <Label text="ID :" GridPane.rowIndex="2" />
+                  <TextField fx:id="newEmployeeName" GridPane.columnIndex="1" />
+                  <TextField fx:id="newEmployeeLname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="newEmployeeId" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Fecha nacimiento :" GridPane.rowIndex="3" />
+                  <Label text="Talla camisa :" GridPane.rowIndex="4" />
+                  <Label text="Talla pantalon :" GridPane.rowIndex="5" />
+                  <Label text="Talla zapatos :" GridPane.rowIndex="6" />
+                  <TextField fx:id="newEmployeeShirtSize" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="newEmployeeSizePants" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="newEmployeeSizeShoe" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label text="Fecha ingreso a REV :" GridPane.rowIndex="7" />
+                  <DatePicker fx:id="newEmployeeEntryDate" prefHeight="25.0" prefWidth="269.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <DatePicker fx:id="newEmployeeBirthDay" prefHeight="25.0" prefWidth="306.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+            <Label layoutX="22.0" layoutY="14.0" text="Agregar nuevo empleado :">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Button layoutX="523.0" layoutY="135.0" mnemonicParsing="false" onAction="#addEmployeeBtn" prefHeight="91.0" prefWidth="156.0" text="Agregar" />
+            <Button layoutX="555.0" layoutY="242.0" mnemonicParsing="false" onAction="#employeeClearBtn" text="Vaciar campos" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

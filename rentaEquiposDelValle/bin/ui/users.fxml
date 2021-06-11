@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: WHITE; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1125.0" style="-fx-background-color: WHITE; -fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <BorderPane prefHeight="88.0" prefWidth="1125.0" style="-fx-background-color: #fcba03; -fx-border-color: black; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
          <left>
@@ -56,12 +55,12 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView prefHeight="543.0" prefWidth="681.0">
+            <TableView fx:id="tvUsers" prefHeight="543.0" prefWidth="681.0">
               <columns>
-                <TableColumn prefWidth="157.0" text="NOMBRE" />
-                <TableColumn prefWidth="174.0" text="APELLIDO" />
-                  <TableColumn prefWidth="183.0" text="ID" />
-                  <TableColumn prefWidth="180.0" text="USUARIO" />
+                <TableColumn fx:id="tcUserName" prefWidth="157.0" text="NOMBRE" />
+                <TableColumn fx:id="tcUserLastName" prefWidth="174.0" text="APELLIDO" />
+                  <TableColumn fx:id="tcUserId" prefWidth="183.0" text="ID" />
+                  <TableColumn fx:id="tcUserUsername" prefWidth="180.0" text="USUARIO" />
               </columns>
                <VBox.margin>
                   <Insets />
@@ -69,13 +68,19 @@
             </TableView>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <Label fx:id="UserInfo" prefHeight="192.0" prefWidth="519.0" text="info" BorderPane.alignment="CENTER" />
+                  <Label fx:id="UserInfo" prefHeight="192.0" prefWidth="519.0" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets left="10.0" />
+                     </BorderPane.margin></Label>
                </center>
                <right>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button layoutX="47.0" layoutY="48.0" mnemonicParsing="false" onAction="#UserSaveChanges" prefHeight="39.0" prefWidth="106.0" text="Guardar cambios" />
-                        <Button layoutX="71.0" layoutY="105.0" mnemonicParsing="false" onAction="#UserDelete" text="Eliminar" />
+                        <Button fx:id="userDelete" layoutX="71.0" layoutY="105.0" mnemonicParsing="false" onAction="#UserDelete" text="Eliminar" visible="false" />
                      </children>
                   </AnchorPane>
                </right>

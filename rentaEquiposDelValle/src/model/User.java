@@ -10,7 +10,7 @@ public class User extends Person{
 	private String userName;
 
 	
-	public User(String name, String lastname, int id, String userName, String password) {
+	public User(String name, String lastname, String id, String userName, String password) {
 		super(name, lastname, id);
 		this.userName = userName;
 		this.userPassword = password;

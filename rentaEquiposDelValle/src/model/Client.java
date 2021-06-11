@@ -10,9 +10,10 @@ public class Client extends Person{
 	 */
 	private static final long serialVersionUID = -6195970929649304766L;
 
-	public Client(String name, String lastname, int id) {
+	public Client(String name, String lastname, String id,String address, String phone) {
 		super(name, lastname, id);
-		
+		this.address = address;
+		this.phone = phone;
 	}
 
 	public String getAddress() {
