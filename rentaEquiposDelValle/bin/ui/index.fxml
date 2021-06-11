@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1305.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1305.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox prefHeight="919.0" prefWidth="182.0" style="-fx-background-color: #fcba03; -fx-border-color: black; -fx-border-width: 1 2 1 1;" BorderPane.alignment="CENTER">
          <children>
@@ -101,6 +101,20 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
 				</Hyperlink>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" text="Mas">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fcba03;">
+                           <children>
+                              <Hyperlink onAction="#hyperLinkImport" text="Importar" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
+                              <Hyperlink onAction="#hyperLinkExport" text="Exportar" textFill="WHITE" />
                            </children>
                         </VBox>
                      </content>

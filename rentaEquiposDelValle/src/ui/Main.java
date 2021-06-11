@@ -5,10 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+	/**
+	 * 
+	 * @author Samuel Guerrero // Isabella Naranjo
+	 * Main Class
+	 *
+	 */
 public class Main extends Application{
 	RentaGUI rentaGUI;
-	
+
 	public Main(){
 		rentaGUI = new RentaGUI();
 			}

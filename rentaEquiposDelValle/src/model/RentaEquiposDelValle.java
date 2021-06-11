@@ -12,9 +12,9 @@ import java.util.List;
 public class RentaEquiposDelValle {
 
 	private List<User> users;
-	private List<Client>clients;
-	private List<Employee>employee;
-	private List<Machine>machines;
+	private List<Client> clients;
+	private List<Employee> employee;
+	private List<Machine> machines;
 	private Machine root;
 
 	public RentaEquiposDelValle() {
@@ -24,11 +24,11 @@ public class RentaEquiposDelValle {
 		machines = new ArrayList<>();
 	}
 
-	// ---------------------------------------------GETTERS & SETTERS-----------------------------------------------
+	// ---------------------------------------------GETTERS &SETTERS------------------------------------
 	public List<User> getUsers() {
 		return users;
 	}
-	
+
 	public List<Client> getClients() {
 		return clients;
 	}
@@ -36,32 +36,24 @@ public class RentaEquiposDelValle {
 	public List<Employee> getEmployee() {
 		return employee;
 	}
-	
+
 	public List<Machine> getMachines() {
 		return machines;
 	}
-	//----------------------------------------------TEXTOPLANO-----------------------------------------
-	
-	/*public void exportData(String fileName) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(fileName);
-		for (int i = 0; i < array.length; i++) {
-			
-		}
-	}*/
 
 	public Machine getRoot() {
 		return root;
+	// ----------------------------------------------TEXTOPLANO-----------------------------------------
+
 	}
 
 	public void importData() {
-		
+
 	}
 
-	// ----------------------------------------------SERIALIZATION---------------------------------------------------
+	// ----------------------------------------------SERIALIZATION--------------------------------------
 
 	// -----------------------------SAVE
-
-
 
 	public void saveUsers() throws IOException {
 		FileOutputStream fos = new FileOutputStream("data/Saved_users.va");
@@ -69,22 +61,22 @@ public class RentaEquiposDelValle {
 		out.writeObject(users);
 		out.close();
 	}
-	
-	public void saveEmployees() throws IOException{
+
+	public void saveEmployees() throws IOException {
 		FileOutputStream fos = new FileOutputStream("data/Saved_employees.va");
 		ObjectOutputStream out = new ObjectOutputStream(fos);
 		out.writeObject(employee);
 		out.close();
 	}
-	
-	public void saveClients() throws IOException{
+
+	public void saveClients() throws IOException {
 		FileOutputStream fos = new FileOutputStream("data/Saved_clients.va");
 		ObjectOutputStream out = new ObjectOutputStream(fos);
 		out.writeObject(clients);
 		out.close();
 	}
 
-	// -----------------------------LOAD
+	// -----------------------------LOAD-----------------------------
 
 	@SuppressWarnings("unchecked")
 	public void load() throws ClassNotFoundException, IOException {
@@ -109,84 +101,84 @@ public class RentaEquiposDelValle {
 			clients = (ArrayList<Client>) input.readObject();
 			input.close();
 		}
-		
+
 	}
-	
-	//---------------------------------------------------------------------------------------------------------------
+
+	// ---------------------------------------------------------------------------------------------------------------
 
 	public void addUser(User user) throws IOException {
-		if(users.isEmpty()) {
+		if (users.isEmpty()) {
 			users.add(user);
 		} else {
 			int c = 0;
-			while(c <= users.size() && comparatorAddUser(user.getUserName(), (users.get(c)).getUserName()) > 1) {
+			while (c <= users.size() && comparatorAddUser(user.getUserName(), (users.get(c)).getUserName()) > 1) {
 				c++;
 			}
 			users.add(c, user);
 		}
 		saveUsers();
 	}
-	
+
 	public void addEmployee(Employee newEmployee) throws IOException {
-		if(employee.isEmpty()) {
+		if (employee.isEmpty()) {
 			employee.add(newEmployee);
 		} else {
 			int i = 0;
-			while (i < employee.size() && comparatorAddEmployee(newEmployee.getLastname(), employee.get(i).getLastname()) >1) {
+			while (i < employee.size()
+					&& comparatorAddEmployee(newEmployee.getLastname(), employee.get(i).getLastname()) > 1) {
 				i++;
 			}
 			employee.add(i, newEmployee);
 		}
 		saveEmployees();
-		}
-	
-	
+	}
+
 	public void addClient(Client client) throws IOException {
-		if(clients.isEmpty()) {
+		if (clients.isEmpty()) {
 			clients.add(client);
 		} else {
 			int i = 0;
-			while (i < clients.size() && comparatorAddClient(client.getId(), clients.get(i).getId()) >1) {
+			while (i < clients.size() && comparatorAddClient(client.getId(), clients.get(i).getId()) > 1) {
 				i++;
 			}
 			clients.add(i, client);
 		}
 		saveClients();
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	
+
+	// ------------------------------------------------------------------------------------------------
+
 	private int comparatorAddUser(String username1, String username2) {
 		return username1.compareToIgnoreCase(username2);
 	}
-	
+
 	private int comparatorAddEmployee(String name1, String name2) {
 		return name1.compareToIgnoreCase(name2);
 	}
-	
+
 	private int comparatorAddClient(String name1, String name2) {
 		return name1.compareToIgnoreCase(name2);
 	}
-	//------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------
 
 	public User binarySearchUser(String username) {
 		User userSeek = null;
-		if(users.size() > 0) {
+		if (users.size() > 0) {
 			boolean find = false;
 			int in = 0;
 			int fin = users.size();
 
-			while(in <= fin && !find) {
-				int pos = (int) Math.floor((in+fin)/2);
-				if(pos != users.size()) {
+			while (in <= fin && !find) {
+				int pos = (int) Math.floor((in + fin) / 2);
+				if (pos != users.size()) {
 					String el = users.get(pos).getUserName();
 					int compar = username.compareToIgnoreCase(el);
-					if(compar == 0) {
+					if (compar == 0) {
 						userSeek = users.get(pos);
 						find = true;
-					} else if(compar < 0) {
+					} else if (compar < 0) {
 						fin = pos - 1;
-					} else if(compar > 0) {
+					} else if (compar > 0) {
 						in = pos + 1;
 					}
 				}
@@ -194,7 +186,7 @@ public class RentaEquiposDelValle {
 		}
 		return userSeek;
 	}
-	
+
 	public String binarySearchEmployee(String entryDate) {
 		Employee employeeSeek = null;
 		String string = "";
@@ -210,7 +202,11 @@ public class RentaEquiposDelValle {
 					compar = entryDate.compareToIgnoreCase(el);
 					if (compar == 0) {
 						employeeSeek = employee.get(pos);
-						string = ("Esta es la informcaion del usuario : "+employeeSeek.getName()+"\n"+employeeSeek.getLastname()+" "+employeeSeek.getId()+" "+employeeSeek.getShirtSize()+" "+employeeSeek.getPantsSize()+" "+employeeSeek.getShoesSize()+" "+employeeSeek.getBirthDay()+" "+employeeSeek.getEntryDate());
+						string = ("Esta es la informcaion del usuario : " + employeeSeek.getName() + "\n"
+								+ employeeSeek.getLastname() + " " + employeeSeek.getId() + " "
+								+ employeeSeek.getShirtSize() + " " + employeeSeek.getPantsSize() + " "
+								+ employeeSeek.getShoesSize() + " " + employeeSeek.getBirthDay() + " "
+								+ employeeSeek.getEntryDate());
 						find = true;
 					} else if (compar < 0) {
 						fin = pos - 1;
@@ -225,7 +221,7 @@ public class RentaEquiposDelValle {
 		}
 		return string;
 	}
-	
+
 	public Client binarySearchClient(String identification) {
 		Client client = null;
 		if (clients.size() > 0) {
@@ -251,9 +247,9 @@ public class RentaEquiposDelValle {
 		}
 		return client;
 	}
-	
-	//---------------------------------------------------------------------------------
-	
+
+	// ---------------------------------------------------------------------------------
+
 	public String searchUserName(String user) throws IOException {
 		String veh = null;
 		boolean found = false;
@@ -305,28 +301,28 @@ public class RentaEquiposDelValle {
 		}
 		return veh;
 	}
-	
-	//----------------------------------------------------------------------
+
+	// ----------------------------------------------------------------------
 	public String binaryDeleteUser(String username) throws IOException {
 		String string = "";
-		if(users.size() > 0) {
+		if (users.size() > 0) {
 			boolean find = false;
 			int in = 0;
 			int fin = users.size();
 
-			while(in <= fin && !find) {
-				int pos = (int) Math.floor((in+fin)/2);
-				if(pos != users.size()) {
+			while (in <= fin && !find) {
+				int pos = (int) Math.floor((in + fin) / 2);
+				if (pos != users.size()) {
 					String el = users.get(pos).getUserName();
 					int compar = username.compareToIgnoreCase(el);
-					if(compar == 0) {
-						string = "El siguiene usuario se ha eliminado del sistema :\n"+toStringUser(users.get(pos));
+					if (compar == 0) {
+						string = "El siguiene usuario se ha eliminado del sistema :\n" + toStringUser(users.get(pos));
 						users.remove(pos);
 						saveUsers();
 						find = true;
-					} else if(compar < 0) {
+					} else if (compar < 0) {
 						fin = pos - 1;
-					} else if(compar > 0) {
+					} else if (compar > 0) {
 						in = pos + 1;
 					}
 				}
@@ -334,7 +330,7 @@ public class RentaEquiposDelValle {
 		}
 		return string;
 	}
-	
+
 	public String binaryDeleteEmployee(String entryDate) throws IOException {
 		String string = "";
 		if (employee.size() > 0) {
@@ -348,7 +344,11 @@ public class RentaEquiposDelValle {
 					String el = employee.get(pos).getLastname();
 					compar = entryDate.compareToIgnoreCase(el);
 					if (compar == 0) {
-						string = "El siguiene empleado se ha eliminado del sistema :\n"+(employee.get(pos).getName()+" "+employee.get(pos).getLastname()+" "+employee.get(pos).getId()+" "+employee.get(pos).getShirtSize()+" "+employee.get(pos).getPantsSize()+" "+employee.get(pos).getShoesSize()+" "+employee.get(pos).getBirthDay()+" "+employee.get(pos).getEntryDate());
+						string = "El siguiene empleado se ha eliminado del sistema :\n" + (employee.get(pos).getName()
+								+ " " + employee.get(pos).getLastname() + " " + employee.get(pos).getId() + " "
+								+ employee.get(pos).getShirtSize() + " " + employee.get(pos).getPantsSize() + " "
+								+ employee.get(pos).getShoesSize() + " " + employee.get(pos).getBirthDay() + " "
+								+ employee.get(pos).getEntryDate());
 						employee.remove(pos);
 						saveEmployees();
 						find = true;
@@ -365,27 +365,28 @@ public class RentaEquiposDelValle {
 		}
 		return string;
 	}
-	
+
 	public String binaryDeleteCliente(String id) throws IOException {
 		String string = "";
-		if(clients.size() > 0) {
+		if (clients.size() > 0) {
 			boolean find = false;
 			int in = 0;
 			int fin = clients.size();
 
-			while(in <= fin && !find) {
-				int pos = (int) Math.floor((in+fin)/2);
-				if(pos != clients.size()) {
+			while (in <= fin && !find) {
+				int pos = (int) Math.floor((in + fin) / 2);
+				if (pos != clients.size()) {
 					String el = clients.get(pos).getId();
 					int compar = id.compareToIgnoreCase(el);
-					if(compar == 0) {
-						string = "El siguiene usuario se ha eliminado del sistema :\n"+toStringClient(clients.get(pos));
+					if (compar == 0) {
+						string = "El siguiene usuario se ha eliminado del sistema :\n"
+								+ toStringClient(clients.get(pos));
 						clients.remove(pos);
 						saveClients();
 						find = true;
-					} else if(compar < 0) {
+					} else if (compar < 0) {
 						fin = pos - 1;
-					} else if(compar > 0) {
+					} else if (compar > 0) {
 						in = pos + 1;
 					}
 				}
@@ -393,20 +394,23 @@ public class RentaEquiposDelValle {
 		}
 		return string;
 	}
-	
-	//-----------------------------------------------------------------------
+
+	// -----------------------------------------------------------------------
 	public String toStringUser(User user) {
-		return "Esta es la informcaion del usuario :"+user.getUserName()+" \n"+user.getName()+" "+user.getLastname()+" "+user.getId()+" "+user.getUserName();
+		return "Esta es la informcaion del usuario :" + user.getUserName() + " \n" + user.getName() + " "
+				+ user.getLastname() + " " + user.getId() + " " + user.getUserName();
 	}
-	
+
 	public String toStringClient(Client client) {
-		return "Esta es la informcaion del Cliente :"+" \n"+client.getName()+" "+client.getLastname()+" "+client.getId()+" "+client.getAddress()+" "+client.getPhone();
+		return "Esta es la informcaion del Cliente :" + " \n" + client.getName() + " " + client.getLastname() + " "
+				+ client.getId() + " " + client.getAddress() + " " + client.getPhone();
 	}
-	
-	//---------------------------------BINARY TREE---------------------------------------
-	
+
+	// ---------------------------------BINARY
+	// TREE---------------------------------------
+
 	public void addCartBinaryTree(Machine newMachine) {
-		if(root == null) {
+		if (root == null) {
 			root = newMachine;
 			machines.add(newMachine);
 		} else {
@@ -415,36 +419,38 @@ public class RentaEquiposDelValle {
 	}
 
 	private void addCartBinaryTree(Machine current, Machine newMachine) {
-		if(current.getName().compareToIgnoreCase(newMachine.getName())<1) {
-			if(current.getLeft()==null) {
+		if (current.getName().compareToIgnoreCase(newMachine.getName()) < 1) {
+			if (current.getLeft() == null) {
 				current.setLeft(newMachine);
 				newMachine.setFather(current);
 				machines.add(newMachine);
-			}else {
-				addCartBinaryTree(current.getLeft(),newMachine);
+			} else {
+				addCartBinaryTree(current.getLeft(), newMachine);
 			}
-		}else {
-			if(current.getRight()==null) {
+		} else {
+			if (current.getRight() == null) {
 				current.setRight(newMachine);
 				newMachine.setFather(current);
 				machines.add(newMachine);
-			}else {
-				addCartBinaryTree(current.getRight(),newMachine);
+			} else {
+				addCartBinaryTree(current.getRight(), newMachine);
 			}
 		}
 	}
-	
+
+	public Machine searchMachine(String name) {
+		return searchMachine(root, name);
+	}
+
 	private Machine searchMachine(Machine current, String name) {
-		if(current==null||current.getName()==name) {
+		if (current == null || current.getName().equalsIgnoreCase(name)) {
 			return current;
-		}
-		else {
-			if(name.compareToIgnoreCase(current.getName())<1) {
+		} else {
+			if (name.compareToIgnoreCase(current.getName()) < 1) {
 				return searchMachine(current.getLeft(), name);
-			}else {
+			} else {
 				return searchMachine(current.getRight(), name);
 			}
 		}
 	}
-	
 }

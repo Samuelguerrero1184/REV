@@ -256,6 +256,17 @@ public class RentaGUI {
 	void hyperLinkChangePsw(ActionEvent event) {
 
 	}
+	
+
+    @FXML
+    void hyperLinkExport(ActionEvent event) {
+
+    }
+
+    @FXML
+    void hyperLinkImport(ActionEvent event) {
+
+    }
 
 	// ---------------------------------Inventory-----------------------------------------------
 
@@ -288,7 +299,7 @@ public class RentaGUI {
 		tvType.setCellValueFactory(new PropertyValueFactory<Machine, String>("typeMachine")); 
 		tvBrand.setCellValueFactory(new PropertyValueFactory<Machine, String>("brand")); 
 		tvName.setCellValueFactory(new PropertyValueFactory<Machine, String>("name"));
-		tvNumber.setCellValueFactory(new PropertyValueFactory<Machine, Integer>("internalName"));
+		tvNumber.setCellValueFactory(new PropertyValueFactory<Machine, Integer>("internalNumber"));
     }
 
 	@FXML
@@ -323,7 +334,7 @@ public class RentaGUI {
 
     @FXML
     void InvAddAdd(ActionEvent event) {
-    	Machine machine = new Machine(InvAddType.getValue(), InvAddBrand.getText(), InvAddName.getText(), Integer.parseInt(InvAddNumber.getText()), InvAddSerial.getText(), invAddGas.getValue());
+    	Machine machine = new Machine(InvAddType.getValue(), InvAddBrand.getText(), InvAddName.getText().toUpperCase(), Integer.parseInt(InvAddNumber.getText()), InvAddSerial.getText(), invAddGas.getValue());
     	rentaEquipos.addCartBinaryTree(machine);
     	InvAddBrand.clear();
     	InvAddName.clear();
@@ -337,13 +348,9 @@ public class RentaGUI {
 	}
 
 	@FXML
-	void InvNavName(ActionEvent event) {
-
-	}
-
-	@FXML
 	void InvNavSearchBtn(ActionEvent event) {
-
+		Machine machine = rentaEquipos.searchMachine(InvNavName.getText()); 
+		moreInfoLabel.setText("La informacion de : "+machine.getName()+" "+machine.getBrand()+"\n"+"Numero : "+machine.getInternalNumber()+"\n"+"Serial : "+machine.getSerial()+"\n"+"Tipo : "+machine.getTypeMachine()+"\n"+"Tipo de combustible : "+machine.getTypeGasoline());
 	}
 
 	@FXML
