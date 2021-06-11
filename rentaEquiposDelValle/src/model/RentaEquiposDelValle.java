@@ -43,13 +43,6 @@ public class RentaEquiposDelValle {
 
 	public Machine getRoot() {
 		return root;
-	// ----------------------------------------------TEXTOPLANO-----------------------------------------
-
-	}
-
-	public void importData() {
-
-	}
 
 	// ----------------------------------------------SERIALIZATION--------------------------------------
 
