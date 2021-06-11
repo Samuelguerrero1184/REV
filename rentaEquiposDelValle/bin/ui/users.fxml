@@ -40,7 +40,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="UserNavName" layoutX="10.0" layoutY="107.0" prefWidth="200.0" />
-                  <Label layoutX="14.0" layoutY="83.0" text="Buscar por Nombre :" textFill="WHITE" />
+                  <Label layoutX="14.0" layoutY="83.0" text="Buscar por Nombre de usuario  :" textFill="WHITE" />
                   <Button layoutX="10.0" layoutY="140.0" mnemonicParsing="false" onAction="#UserNavSearch" prefWidth="200.0" text="Buscar" />
                </children>
             </Pane>

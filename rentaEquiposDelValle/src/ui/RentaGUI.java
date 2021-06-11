@@ -151,8 +151,7 @@ public class RentaGUI {
 		statusUser.setText("Agregado!");
 	}
 
-	// --------------------------------------------------------------INDEX
-	// INTERFACE-------------------------------------------------------
+	// -----------------------------------INDEX INTERFACE---------------------------------------------------
 
 	@FXML
 	private Label currentUser_Username;
@@ -197,6 +196,7 @@ public class RentaGUI {
 		Parent addPane = fxmlLoader.load();
 
 		changePane.setCenter(addPane);
+		initializeTvClients();
 	}
 
 	@FXML
@@ -246,7 +246,7 @@ public class RentaGUI {
 
 	}
 
-	// ---------------------------------------------------------------Inventory--------------------------------------------------------
+	// ---------------------------------Inventory-----------------------------------------------
 
 	@FXML
 	private TableView<?> tvInv;
@@ -439,7 +439,7 @@ public class RentaGUI {
     private Button deleteEmployee;
 	
     @FXML
-    void DeleteEmployee(ActionEvent event) {
+    void DeleteEmployee(ActionEvent event) throws IOException {
     	employeeInfo.setText(rentaEquipos.binaryDeleteEmployee(EmployeeNavName.getText()));
     }
 
@@ -511,9 +511,23 @@ public class RentaGUI {
 	@FXML
 	private TextField ClientNavName;
 
+    @FXML
+    private Label clientsInfo;
+
+    @FXML
+    private Button deleteClient;
+
+    @FXML
+    void DeleteClient(ActionEvent event) throws IOException {
+    	rentaEquipos.binaryDeleteCliente(ClientNavName.getText());
+    }
+    
 	@FXML
 	void ClientNavSearch(ActionEvent event) {
-
+		if(ClientNavName.getText() != null) {
+		clientsInfo.setText(rentaEquipos.toStringClient(rentaEquipos.binarySearchClient(ClientNavName.getText())));
+		}
+		deleteClient.setVisible(true);
 	}
 	
     @FXML
@@ -533,6 +547,17 @@ public class RentaGUI {
 
     @FXML
     private TableColumn<Client, String> tcClientPhone;
+    
+    public void initializeTvClients(){
+    	ObservableList<Client> observableList = FXCollections.observableArrayList(rentaEquipos.getClients());
+    	
+		tvClients.setItems(observableList);
+		tcClientName.setCellValueFactory(new PropertyValueFactory<Client,String>("name")); 
+		tcClientLastName.setCellValueFactory(new PropertyValueFactory<Client,String>("lastname")); 
+		tcClientId.setCellValueFactory(new PropertyValueFactory<Client,String>("id"));
+		tcClientAddress.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
+		tcClientPhone.setCellValueFactory(new PropertyValueFactory<Client, String>("phone"));
+    }
 
     @FXML
     void hyperlinkAddNewClient(ActionEvent event) throws IOException {
@@ -565,25 +590,24 @@ public class RentaGUI {
 
     @FXML
     void addClientBtn(ActionEvent event) throws IOException {
-		rentaEquipos.addClient(newClientName.getText().toUpperCase(),newClientLname.getText().toUpperCase(),newClientId.getText(),newClientAddress.getText(),newClientPhone.getText());
+    	Client client = new Client(newClientName.getText().toUpperCase(),newClientLname.getText().toUpperCase(),newClientId.getText(),newClientAddress.getText(),newClientPhone.getText());
+		rentaEquipos.addClient(client);
 		popStage.close();
-		FXMLLoader fxmlloader2 = new FXMLLoader(getClass().getResource("employee.fxml"));
+		FXMLLoader fxmlloader2 = new FXMLLoader(getClass().getResource("client.fxml"));
 		fxmlloader2.setController(this);
 		Parent reLoad = fxmlloader2.load();
 		changePane.getChildren().clear();
 		changePane.setCenter(reLoad);
-		initializeTvEmployees();
+		initializeTvClients();
     }
 
     @FXML
     void clientClearBtn(ActionEvent event) {
-
     	newClientAddress.clear();
     	newClientId.clear();
     	newClientLname.clear();
     	newClientName.clear();
     	newClientPhone.clear();
-    	
     }
 
     
