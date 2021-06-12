@@ -104,7 +104,7 @@
                   <Label layoutX="895.0" layoutY="18.0" text="No. Remisión :" />
                </children>
             </AnchorPane>
-            <TableView fx:id="tvR" prefHeight="440.0" prefWidth="1125.0">
+            <TableView fx:id="tvR" editable="true" prefHeight="440.0" prefWidth="1125.0">
               <columns>
                 <TableColumn fx:id="tcRcuantity" prefWidth="103.0" text="CANTIDAD" />
                 <TableColumn fx:id="tcRbrand" prefWidth="166.0" text="MARCA" />

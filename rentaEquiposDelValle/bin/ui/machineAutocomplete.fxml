@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="searchMachineField" layoutX="252.0" layoutY="92.0" />
+            <Label layoutX="163.0" layoutY="32.0" text="Ingresar maquinas">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="90.0" layoutY="96.0" text="Buscar maquina por nombre :" />
+            <Button layoutX="196.0" layoutY="175.0" mnemonicParsing="false" onAction="#rInsertMachine" style="-fx-background-color: green;" text="Auto completar" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

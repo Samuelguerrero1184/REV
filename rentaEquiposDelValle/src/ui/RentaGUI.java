@@ -2,7 +2,11 @@ package ui;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Random;
 
+import exceptions.ClientNotExistsException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +38,7 @@ public class RentaGUI {
 
 	private RentaEquiposDelValle rentaEquipos;
 	private String currentUser;
+	private ArrayList<Machine>machines;
 
 	public RentaGUI() {
 		rentaEquipos = new RentaEquiposDelValle();
@@ -41,10 +46,16 @@ public class RentaGUI {
 
 	public void initialize() throws ClassNotFoundException, IOException {
 		rentaEquipos.load();
+		machines = new ArrayList<>();
 	}
 
 	// ------------------------------------------LOGIn
 	// INTERFACE----------------------------------
+
+	public ArrayList<Machine> getMachines() {
+		return machines;
+	}
+
 
 	private Stage stage;
 
@@ -366,7 +377,7 @@ public class RentaGUI {
 	private ComboBox<String> invAddGas;
 
 	@FXML
-	void InvAddAdd(ActionEvent event) {
+	void InvAddAdd(ActionEvent event) throws IOException {
 		Machine machine = new Machine(InvAddType.getValue(), InvAddBrand.getText(), InvAddName.getText().toUpperCase(),
 				Integer.parseInt(InvAddNumber.getText()), InvAddSerial.getText(), invAddGas.getValue());
 		rentaEquipos.addCartBinaryTree(machine);
@@ -377,22 +388,18 @@ public class RentaGUI {
 	}
 
 	@FXML
-	void InvAddType(ActionEvent event) {
-
-	}
-
-	@FXML
 	void InvNavSearchBtn(ActionEvent event) {
 		Machine machine = rentaEquipos.searchMachine(InvNavName.getText());
 		moreInfoLabel.setText("La informacion de : " + machine.getName() + " " + machine.getBrand() + "\n" + "Numero : "
 				+ machine.getInternalNumber() + "\n" + "Serial : " + machine.getSerial() + "\n" + "Tipo : "
 				+ machine.getTypeMachine() + "\n" + "Tipo de combustible : " + machine.getTypeGasoline());
 	}
+	
+    @FXML
+    void deleteMachine(ActionEvent event) throws IOException {
+    	rentaEquipos.binaryDeleteMachine(InvNavName.getText());
+    }
 
-	@FXML
-	void InvNavType(ActionEvent event) {
-
-	}
 
 	// ------------------------------------------------------------USERS-------------------------------------------
 
@@ -607,8 +614,12 @@ public class RentaGUI {
 
 	@FXML
 	void ClientNavSearch(ActionEvent event) {
-		if (ClientNavName.getText() != null) {
-			clientsInfo.setText(rentaEquipos.toStringClient(rentaEquipos.binarySearchClient(ClientNavName.getText())));
+		if(ClientNavName.getText() != null) {
+			try {
+				clientsInfo.setText(rentaEquipos.toStringClient(rentaEquipos.binarySearchClient(ClientNavName.getText())));
+			} catch(ClientNotExistsException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 		deleteClient.setVisible(true);
 	}
@@ -677,12 +688,6 @@ public class RentaGUI {
 				newClientId.getText(), newClientAddress.getText(), newClientPhone.getText());
 		rentaEquipos.addClient(client);
 		popStage.close();
-		FXMLLoader fxmlloader2 = new FXMLLoader(getClass().getResource("client.fxml"));
-		fxmlloader2.setController(this);
-		Parent reLoad = fxmlloader2.load();
-		changePane.getChildren().clear();
-		changePane.setCenter(reLoad);
-		initializeTvClients();
 	}
 
 	@FXML
@@ -728,19 +733,19 @@ public class RentaGUI {
 	private TextField rNumber;
 
 	@FXML
-	private TableView<?> tvR;
+	private TableView<Machine> tvR;
 
 	@FXML
 	private TableColumn<?, ?> tcRcuantity;
 
 	@FXML
-	private TableColumn<?, ?> tcRbrand;
+	private TableColumn<Machine, String> tcRbrand;
 
 	@FXML
-	private TableColumn<?, ?> tcRname;
+	private TableColumn<Machine, String> tcRname;
 
 	@FXML
-	private TableColumn<?, ?> tcRnumber;
+	private TableColumn<Machine, Integer> tcRnumber;
 
 	@FXML
 	private TableColumn<?, ?> tcRobservations;
@@ -752,18 +757,42 @@ public class RentaGUI {
 	private Label autoCompleteLabel;
 
 	@FXML
-	void rAutoComplete(ActionEvent event) {
+	void rAutoComplete(ActionEvent event) throws ClientNotExistsException {
+		if(searchClientField.getText() != null) {
+			Client cliente = rentaEquipos.searchClient(searchClientField.getText());
+			rRazonsocial.setText(cliente.getName());
+			rAddress.setText(cliente.getAddress());
+			rId.setText(cliente.getId());
+			rPhone.setText(cliente.getPhone());
+			LocalDate date = LocalDate.now();
+			rDate.setValue(date);
+			LocalTime time = LocalTime.now();
+			rTime.setText(time.toString());
+			Random rand = new Random();
+			int randNum = rand.nextInt(100000);
+			rNumber.setText(String.valueOf(randNum));
 
+		}
 	}
 
 	@FXML
-	void searchClientBtn(ActionEvent event) {
-
+	void searchClientBtn(ActionEvent event) throws ClientNotExistsException {
+		if(searchClientField.getText() != null) {
+			rentaEquipos.searchClient(searchClientField.getText());
+			autoCompleteLabel.setText("Cliente encontrado");
+		}else {
+		autoCompleteLabel.setText("Cliente no encontrado");
+		}
 	}
 
 	@FXML
 	void rClear(ActionEvent event) {
-
+		rRazonsocial.clear();
+		rAddress.clear();
+		rId.clear();
+		rPhone.clear();
+		rDate.setValue(null);
+		rTime.clear();
 	}
 
 	@FXML
@@ -787,14 +816,46 @@ public class RentaGUI {
 	}
 
 	@FXML
-	void seekInv(ActionEvent event) {
-
+	void seekInv(ActionEvent event) throws IOException {
+		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("remisionPane.fxml"));
+		FXMLLoader fxmlloader2 = new FXMLLoader(getClass().getResource("machineAutocomplete.fxml"));
+		fxmlloader.setController(this);
+		fxmlloader2.setController(this);
+		Parent menu = fxmlloader.load();
+		Parent menu2 = fxmlloader2.load();
+		Scene scene = new Scene(menu);
+		remisionPane.getChildren().clear();
+		remisionPane.setCenter(menu2);
+		Stage popStage2 = new Stage();
+		popStage2.setScene(scene);
+		popStage2.show();
 	}
 
 	@FXML
 	void remisionPrint(ActionEvent event) {
 
 	}
+	
+	public void initializeTvRemision() {
+		ObservableList<Machine> observableList = FXCollections.observableArrayList(getMachines());
+
+		tvR.setItems(observableList);
+		tcRbrand.setCellValueFactory(new PropertyValueFactory<Machine, String>("brand"));
+		tcRname.setCellValueFactory(new PropertyValueFactory<Machine, String>("name"));
+		tcRnumber.setCellValueFactory(new PropertyValueFactory<Machine, Integer>("internalNumber"));
+	}
+	
+    @FXML
+    private TextField searchMachineField;
+
+    @FXML
+    void rInsertMachine(ActionEvent event) {
+    	if(searchMachineField.getText()!="") {
+    	Machine machine = rentaEquipos.searchMachineSimple(searchMachineField.getText());
+    	machines.add(machine);
+    	initializeTvRemision();
+    	}
+    }
 
 	// Devolucion
 

@@ -13,17 +13,20 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.ClientNotExistsException;
+
 public class RentaEquiposDelValle {
 	
 	
 	private final String CSV_PATH_MACHINES = "data/machinesData.csv";
-	private final String CSV_PATH_CLIENTS = "data/machinesData.csv";
+	private final String CSV_PATH_CLIENTS = "data/clientsData.csv";
 
 	private List<User> users;
 	private List<Client> clients;
 	private List<Employee> employee;
 	private List<Machine> machines;
 	private Machine root;
+	private User rootU;
 
 	public RentaEquiposDelValle() {
 		users = new ArrayList<>();
@@ -129,6 +132,12 @@ public class RentaEquiposDelValle {
 		out.close();
 	}
 
+	/*public void saveMachines() throws IOException {
+		FileOutputStream fos = new FileOutputStream("data/Saved_machines.va");
+		ObjectOutputStream out = new ObjectOutputStream(fos);
+		out.writeObject(machines);
+		out.close();
+	}*/
 	// -----------------------------LOAD-----------------------------
 
 	@SuppressWarnings("unchecked")
@@ -154,7 +163,13 @@ public class RentaEquiposDelValle {
 			clients = (ArrayList<Client>) input.readObject();
 			input.close();
 		}
-
+		/*File mload = new File("data/Saved_machines.va");
+		if (mload.exists()) {
+			FileInputStream fis = new FileInputStream(mload);
+			ObjectInputStream input = new ObjectInputStream(fis);
+			machines = (ArrayList<Machine>) input.readObject();
+			input.close();
+		}*/
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -326,7 +341,7 @@ public class RentaEquiposDelValle {
 		return string;
 	}
 
-	public Client binarySearchClient(String identification) {
+	public Client binarySearchClient(String identification) throws ClientNotExistsException {
 		Client client = null;
 		if (clients.size() > 0) {
 			boolean find = false;
@@ -349,9 +364,29 @@ public class RentaEquiposDelValle {
 				}
 			}
 		}
+		if(client == null) {
+			throw new ClientNotExistsException();
+		}
 		return client;
 	}
-
+	
+	public Client searchClient(String name) {
+		for (int i = 0; i < clients.size(); i++) {
+			if(clients.get(i).getName().equalsIgnoreCase(name)) {
+				return clients.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public Machine searchMachineSimple(String name) {
+		for (int i = 0; i < machines.size(); i++) {
+			if(machines.get(i).getName().equalsIgnoreCase(name)) {
+				return machines.get(i);
+			}
+		}
+		return null;
+	}
 	// ---------------------------------------------------------------------------------
 
 	public String searchUserName(String user) throws IOException {
@@ -498,6 +533,33 @@ public class RentaEquiposDelValle {
 		}
 		return string;
 	}
+	
+	public String binaryDeleteMachine(String username) throws IOException {
+		String string = "";
+		if (machines.size() > 0) {
+			boolean find = false;
+			int in = 0;
+			int fin = machines.size();
+
+			while (in <= fin && !find) {
+				int pos = (int) Math.floor((in + fin) / 2);
+				if (pos != machines.size()) {
+					String el = machines.get(pos).getName();
+					int compar = username.compareToIgnoreCase(el);
+					if (compar == 0) {
+						machines.remove(pos);
+						//saveMachines();
+						find = true;
+					} else if (compar < 0) {
+						fin = pos - 1;
+					} else if (compar > 0) {
+						in = pos + 1;
+					}
+				}
+			}
+		}
+		return string;
+	}
 
 	// -----------------------------------------------------------------------
 	public String toStringUser(User user) {
@@ -513,19 +575,32 @@ public class RentaEquiposDelValle {
 	// ---------------------------------BINARY
 	// TREE---------------------------------------
 
-	public void addCartBinaryTree(Machine newMachine) {
+	public void listToTree() throws IOException {
+		for (int i = 0; i < machines.size(); i++) {
+			machines.get(i);
+			addCartBinaryTree(root);
+		}
+	}
+	
+	
+	public void addCartBinaryTree(Machine newMachine) throws IOException {
 		if (root == null) {
 			root = newMachine;
+			machines.add(newMachine);
 			inorden(root);
+			preorden(root);
+			//saveMachines();
 		} else {
 			addCartBinaryTree(root, newMachine);
 		}
 	}
 
-	private void addCartBinaryTree(Machine current, Machine newMachine) {
+	private void addCartBinaryTree(Machine current, Machine newMachine) throws IOException {
 		if (current.getName().compareToIgnoreCase(newMachine.getName()) < 1) {
 			if (current.getLeft() == null) {
 				current.setLeft(newMachine);
+				machines.add(newMachine);
+				//saveMachines();
 				newMachine.setFather(current);
 			} else {
 				addCartBinaryTree(current.getLeft(), newMachine);
@@ -533,6 +608,8 @@ public class RentaEquiposDelValle {
 		} else {
 			if (current.getRight() == null) {
 				current.setRight(newMachine);
+				machines.add(newMachine);
+				//saveMachines();
 				newMachine.setFather(current);
 			} else {
 				addCartBinaryTree(current.getRight(), newMachine);
@@ -556,11 +633,48 @@ public class RentaEquiposDelValle {
 		}
 	}
 	
-	private void inorden(Machine current) {
+	private void inorden(Machine current) throws IOException {
 	    if (current != null) {
 	        inorden(current.getLeft());
-	        machines.add(current);
-	        inorden(current.getRight());
+	        inorden(current.getRight());  
 	    }
+	}
+	
+	private void preorden(Machine current) {
+	    if (current != null) {
+	    	System.out.println(current);
+	    	preorden(current.getLeft());
+	    	preorden(current.getRight());
+	    }
+	    
+	}
+	
+	public void addUserBinaryTree(User user) throws IOException {
+		if (rootU == null) {
+			rootU = user;
+			inorden(root);
+			preorden(root);
+			//saveMachines();
+		} else {
+			addUserBinaryTree(rootU, user);
+		}
+	}
+
+	private void addUserBinaryTree(User current, User user) throws IOException {
+		if (current.getName().compareToIgnoreCase(user.getName()) < 1) {
+			if (current.getLeft() == null) {
+				current.setLeft(user);
+				user.setFather(current);
+			} else {
+				addUserBinaryTree(current.getLeft(), user);
+			}
+		} else {
+			if (current.getRight() == null) {
+				current.setRight(user);
+				user.setFather(current);
+			} else {
+				addUserBinaryTree(current.getRight(), user);
+			}
+		}
 	}
 }
