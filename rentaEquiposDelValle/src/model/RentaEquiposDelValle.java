@@ -1,15 +1,23 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RentaEquiposDelValle {
+	
+	
+	private final String CSV_PATH_MACHINES = "data/machinesData.csv";
+	private final String CSV_PATH_CLIENTS = "data/machinesData.csv";
 
 	private List<User> users;
 	private List<Client> clients;
@@ -43,6 +51,58 @@ public class RentaEquiposDelValle {
 
 	public Machine getRoot() {
 		return root;
+	}
+	//--------------------------------------------IMPORT EXPORT-----------------------------------------
+	
+	public void exportDataMachines() throws FileNotFoundException {
+		String s = File.pathSeparator;
+		PrintWriter pw = new PrintWriter(CSV_PATH_MACHINES);
+		pw.print("Nombre" + s + "Marca" + s + "Serial" + s + "Número" + s +"Tipo_máquina" + s +"Tipo_Gasolina\n");
+		for(int i = 0; i < machines.size(); i++) {
+			Machine current = machines.get(i);
+			pw.print(current.getName()+s+current.getBrand()+s+current.getSerial()+s+current.getInternalNumber()+s+current.getTypeMachine()+s+current.getTypeGasoline()+"\n");
+		}
+		pw.close();
+	}
+	
+	public void exportDataClients() throws FileNotFoundException {
+		String s = File.pathSeparator;
+		PrintWriter pw = new PrintWriter(CSV_PATH_CLIENTS);
+		pw.print("Name" + s + "Lastname" + s + "Identification" + s + "Address" + s +"Phone\n");
+		for(int i = 0; i < clients.size(); i++) {
+			Client current = clients.get(i);
+			pw.print(current.getName()+s+current.getLastname()+s+current.getId()+s+current.getAddress()+s+current.getPhone()+"\n");
+		}
+		pw.close();
+	}
+	
+	public void importDataClient() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(CSV_PATH_CLIENTS));
+		String line = br.readLine();
+		String [] info;
+		line = br.readLine();
+		clients.clear();
+		while(line != null) {
+			info = line.split(";");
+			clients.add(new Client(info[0], info[1], info[2], info[3], info[4]));
+			line = br.readLine();
+		}
+		br.close();
+	}
+	
+	public void importDataMachines() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(CSV_PATH_MACHINES));
+		String line = br.readLine();
+		String [] info;
+		line = br.readLine();
+		clients.clear();
+		while(line != null) {
+			info = line.split(";");
+			machines.add(new Machine(info[0], info[1], info[2], Integer.parseInt(info[3]), info[4], info[5]));
+			line = br.readLine();
+		}
+		br.close();
+	}
 
 	// ----------------------------------------------SERIALIZATION--------------------------------------
 
@@ -98,7 +158,15 @@ public class RentaEquiposDelValle {
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------
-
+	
+	/**
+	 * addUser
+	 * pre:
+	 * pos: adds a new user to a list in an ordered way
+	 * @param user the new user
+	 * @throws IOException an IOException
+	 */
+	
 	public void addUser(User user) throws IOException {
 		if (users.isEmpty()) {
 			users.add(user);
@@ -111,6 +179,14 @@ public class RentaEquiposDelValle {
 		}
 		saveUsers();
 	}
+	
+	/**
+	 * addEmployee
+	 * pre:
+	 * pos: adds a new employee to a list in an ordered way
+	 * @param employee the new employee
+	 * @throws IOException 
+	 */
 
 	public void addEmployee(Employee newEmployee) throws IOException {
 		if (employee.isEmpty()) {
@@ -126,6 +202,14 @@ public class RentaEquiposDelValle {
 		saveEmployees();
 	}
 
+	/**
+	 * addClient
+	 * pre:
+	 * pos: adds a new client to a list in an ordered way
+	 * @param client the new client
+	 * @throws IOException  
+	 */
+	
 	public void addClient(Client client) throws IOException {
 		if (clients.isEmpty()) {
 			clients.add(client);
@@ -141,13 +225,40 @@ public class RentaEquiposDelValle {
 
 	// ------------------------------------------------------------------------------------------------
 
+	/**
+	 * comparatorAddUser
+	 * pre: called by addUser
+	 * pos: compares usernames for addUser
+	 * @param username1 current user
+	 * @param username2 new username
+	 * @return int username1.compareToIgnoreCase(username2)
+	 */
+	
 	private int comparatorAddUser(String username1, String username2) {
 		return username1.compareToIgnoreCase(username2);
 	}
 
+	/**
+	 * comparatorAddEmployee
+	 * pre:
+	 * pos: compares names 
+	 * @param name1 current employees name
+	 * @param name2 new employees name
+	 * @return int name1.compareToIgnoreCase(name2);
+	 */
+	
 	private int comparatorAddEmployee(String name1, String name2) {
 		return name1.compareToIgnoreCase(name2);
 	}
+	
+	/**
+	 * comparatorAddClient
+	 * pre:
+	 * pos: compares names
+	 * @param name1 current client name
+	 * @param name2 new client name
+	 * @return int name1.compareToIgnoreCase(name2);
+	 */
 
 	private int comparatorAddClient(String name1, String name2) {
 		return name1.compareToIgnoreCase(name2);
@@ -405,7 +516,7 @@ public class RentaEquiposDelValle {
 	public void addCartBinaryTree(Machine newMachine) {
 		if (root == null) {
 			root = newMachine;
-			machines.add(newMachine);
+			inorden(root);
 		} else {
 			addCartBinaryTree(root, newMachine);
 		}
@@ -416,7 +527,6 @@ public class RentaEquiposDelValle {
 			if (current.getLeft() == null) {
 				current.setLeft(newMachine);
 				newMachine.setFather(current);
-				machines.add(newMachine);
 			} else {
 				addCartBinaryTree(current.getLeft(), newMachine);
 			}
@@ -424,7 +534,6 @@ public class RentaEquiposDelValle {
 			if (current.getRight() == null) {
 				current.setRight(newMachine);
 				newMachine.setFather(current);
-				machines.add(newMachine);
 			} else {
 				addCartBinaryTree(current.getRight(), newMachine);
 			}
@@ -445,5 +554,13 @@ public class RentaEquiposDelValle {
 				return searchMachine(current.getRight(), name);
 			}
 		}
+	}
+	
+	private void inorden(Machine current) {
+	    if (current != null) {
+	        inorden(current.getLeft());
+	        machines.add(current);
+	        inorden(current.getRight());
+	    }
 	}
 }

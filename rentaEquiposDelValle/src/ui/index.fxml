@@ -109,12 +109,23 @@
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fcba03;">
                            <children>
-                              <Hyperlink onAction="#hyperLinkImport" text="Importar" textFill="WHITE">
+                              <Hyperlink onAction="#hyperLinkImportM" text="Importar Maquinas" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Hyperlink>
-                              <Hyperlink onAction="#hyperLinkExport" text="Exportar" textFill="WHITE" />
+                              <Hyperlink onAction="#hyperLinkExportM" text="Exportar Maquinas" textFill="WHITE" />
+                              <Hyperlink onAction="#hyperLinkImportC" text="Importar Clientes" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
+                              <Hyperlink onAction="#hyperLinkExportC" text="Exportar Clientes" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Hyperlink>
+                              <Hyperlink onAction="#hyperLinkGraphs" text="Graficas" textFill="WHITE" />
                            </children>
                         </VBox>
                      </content>

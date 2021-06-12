@@ -42,7 +42,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="14.0" layoutY="33.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: #72d96c;" text="Crear">
+                  <Button layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#rSave" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: #72d96c;" text="Crear">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -57,7 +57,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                <children>
-                  <DatePicker layoutX="103.0" layoutY="14.0" />
+                  <DatePicker fx:id="rDate" layoutX="103.0" layoutY="14.0" />
                   <Label layoutX="20.0" layoutY="14.0" text="Fecha :" />
                   <GridPane layoutX="20.0" layoutY="50.0" prefHeight="90.0" prefWidth="518.0">
                     <columnConstraints>
@@ -73,9 +73,9 @@
                         <Label text="Razón Social :" />
                         <Label text="Contacto :" GridPane.rowIndex="1" />
                         <Label text="Dirreción :" GridPane.rowIndex="2" />
-                        <TextField prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" />
-                        <TextField prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="rRazonsocial" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="rContact" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="rAddress" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <GridPane layoutX="911.0" layoutY="41.0" prefHeight="116.0" prefWidth="200.0">
@@ -90,27 +90,27 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField prefHeight="25.0" prefWidth="53.0" GridPane.columnIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="rTime" prefHeight="25.0" prefWidth="53.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="rId" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="rConstruction" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="rPhone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Hora :" />
                         <Label text="Nit/C.C :" GridPane.rowIndex="1" />
                         <Label text="Obra :" GridPane.rowIndex="2" />
                         <Label text="Teléfono :" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <TextField layoutX="985.0" layoutY="14.0" prefHeight="25.0" prefWidth="126.0" />
+                  <TextField fx:id="rNumber" layoutX="985.0" layoutY="14.0" prefHeight="25.0" prefWidth="126.0" />
                   <Label layoutX="895.0" layoutY="18.0" text="No. Remisión :" />
                </children>
             </AnchorPane>
-            <TableView prefHeight="440.0" prefWidth="1125.0">
+            <TableView fx:id="tvR" prefHeight="440.0" prefWidth="1125.0">
               <columns>
-                <TableColumn prefWidth="103.0" text="CANTIDAD" />
-                <TableColumn prefWidth="166.0" text="MARCA" />
-                  <TableColumn minWidth="0.0" prefWidth="411.0" text="NOMBRE" />
-                  <TableColumn prefWidth="77.0" text="NUMERO" />
-                  <TableColumn prefWidth="367.0" text="OBSERVACIONES" />
+                <TableColumn fx:id="tcRcuantity" prefWidth="103.0" text="CANTIDAD" />
+                <TableColumn fx:id="tcRbrand" prefWidth="166.0" text="MARCA" />
+                  <TableColumn fx:id="tcRname" minWidth="0.0" prefWidth="411.0" text="NOMBRE" />
+                  <TableColumn fx:id="tcRnumber" prefWidth="77.0" text="NUMERO" />
+                  <TableColumn fx:id="tcRobservations" prefWidth="367.0" text="OBSERVACIONES" />
               </columns>
             </TableView>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
@@ -120,6 +120,9 @@
                         <Image url="@../../REV.png" />
                      </image>
                   </ImageView>
+                  <Button layoutX="948.0" layoutY="69.0" mnemonicParsing="false" onAction="#seekInv" text="Buscar en inventario" />
+                  <Button layoutX="984.0" layoutY="110.0" mnemonicParsing="false" onAction="#rClear" text="Borrar" />
+                  <Button layoutX="964.0" layoutY="25.0" mnemonicParsing="false" onAction="#seekClient" text="Buscar cliente" />
                </children>
             </AnchorPane>
          </children>
