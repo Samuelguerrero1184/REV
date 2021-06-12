@@ -321,7 +321,7 @@ public class RentaEquiposDelValle {
 					compar = entryDate.compareToIgnoreCase(el);
 					if (compar == 0) {
 						employeeSeek = employee.get(pos);
-						string = ("Esta es la informcaion del usuario : " + employeeSeek.getName() + "\n"
+						string = ("Esta es la informcaion del empleado : " + employeeSeek.getName() + "\n"
 								+ employeeSeek.getLastname() + " " + employeeSeek.getId() + " "
 								+ employeeSeek.getShirtSize() + " " + employeeSeek.getPantsSize() + " "
 								+ employeeSeek.getShoesSize() + " " + employeeSeek.getBirthDay() + " "
